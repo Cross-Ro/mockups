@@ -8,3 +8,4 @@ package-lock.json
 *.log
 .cache
 CLAUDE.md
+.claude
