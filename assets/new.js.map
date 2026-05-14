@@ -1,0 +1,1 @@
+{"version":3,"file":"./new.js","mappings":";YAAA,IAAoBA,IAIT,QAHVC,QAAQC,IAAIF,E","sources":["webpack://module-update/./ts/sections/new.ts"],"sourcesContent":["const printHello = (a:string) => {\n console.log(a);\n}\n\nprintHello(\"Hello\");\n"],"names":["a","console","log"],"sourceRoot":""}
