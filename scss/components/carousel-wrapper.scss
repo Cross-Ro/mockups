@@ -1,0 +1,79 @@
+// Carousel Wrapper Styles
+// Pagination styles for carousel-wrapper.liquid + carousel-swiper custom element
+
+carousel-swiper {
+  // Inactive bullets: 10x10 dot
+  .swiper-pagination-bullet {
+    width: 10px !important;
+    height: 10px !important;
+    opacity: 1 !important;
+    background-color: #A5ADB3 !important;
+    border-radius: 20px !important;
+    transition: width 0.3s ease;
+  }
+
+  // Active bullet: 38x10 pill (track)
+  .swiper-pagination-bullet-active {
+    width: 38px !important;
+    height: 10px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    background-color: #A5ADB3 !important;
+    border-radius: 20px !important;
+  }
+
+  // Progress fill
+  .swiper-pagination-bullet-active::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    width: var(--progress-width, 0%);
+    background-color: #E9E9E9 !important;
+    border-radius: inherit !important;
+    transition: width 0.1s linear;
+  }
+
+  // Pagination alignment
+  .swiper .swiper-pagination,
+  .swiper-pagination {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    position: absolute !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    bottom: 16px !important;
+    width: auto !important;
+    margin: 0 !important;
+  }
+}
+
+.megamenu-carousel {
+  --swiper-navigation-sides-offset: 0;
+
+  .carousel__nav-buttons-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Reserve space for pagination */
+    padding: 0 80px;
+
+    gap: 12px;
+    z-index: 10;
+  }
+
+  .carousel__nav-button {
+    width: 10px;
+    height: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

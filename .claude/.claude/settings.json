@@ -1,0 +1,125 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(yarn typecheck:*)",
+      "Bash(yarn lint:*)",
+      "Bash(yarn start:*)",
+      "Bash(yarn deploy:*)",
+      "Bash(yarn shopify:*)",
+      "Bash(git commit:*)",
+      "Bash(git revert:*)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(git status:*)",
+      "Bash(git branch:*)",
+      "Bash(git add:*)",
+      "Bash(ls:*)",
+      "Bash(jq:*)",
+      "Bash(grep:*)",
+      "Bash(head:*)",
+      "Bash(python3:*)",
+      "Bash(gh repo:*)",
+      "Bash(gh api:*)",
+      "Bash(open:*)",
+      "Bash(cursor:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:shopify.dev)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:flowbite.com)",
+      "WebSearch",
+      "mcp__figma__get_design_context",
+      "mcp__figma__get_screenshot",
+      "mcp__figma__get_variable_defs",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_evaluate",
+      "mcp__playwright__browser_fill_form",
+      "mcp__playwright__browser_select_option",
+      "mcp__playwright__browser_type",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_network_requests",
+      "mcp__playwright-mcp__init-browser",
+      "mcp__playwright-mcp__get-text-snapshot",
+      "mcp__filesystem__list_directory",
+      "mcp__filesystem__list_allowed_directories",
+      "mcp__filesystem__directory_tree",
+      "mcp__filesystem__read_text_file",
+      "mcp__firecrawl__firecrawl_scrape",
+      "mcp__firecrawl__firecrawl_search"
+    ],
+    "defaultMode": "default"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd); echo '=== Session Context ==='; echo \"Branch: $(git -C \"$ROOT\" branch --show-current 2>/dev/null)\"; echo 'Last 5 commits:'; git -C \"$ROOT\" log --oneline -5 2>/dev/null; TS_ERRORS=$(cd \"$ROOT\" && yarn typecheck 2>&1 | grep -c 'error TS' 2>/dev/null || echo 0); echo \"TypeScript errors: $TS_ERRORS\"; MODIFIED=$(git -C \"$ROOT\" diff --name-only HEAD 2>/dev/null | head -10); [ -n \"$MODIFIED\" ] && echo 'Modified:' && echo \"$MODIFIED\" || true",
+            "async": false
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"CAVEMAN MODE ACTIVE. Drop articles, filler, pleasantries. Short synonyms. Fragments OK. Technical terms stay exact. Code blocks unchanged.\"}}'",
+            "async": false
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "FILE=$(jq -r '.tool_input.file_path // empty'); CONTENT=$(jq -r '.tool_input.content // empty'); if [[ \"$FILE\" == */ts/sections/*.ts || \"$FILE\" == */ts/sections/*.tsx ]]; then if echo \"$CONTENT\" | grep -qE \"from [\\\"'][^\\\"']*/sections/\"; then echo \"BLOCKED: Section files cannot import from other ts/sections/ files. Move shared logic to ts/components/.\"; exit 1; fi; fi",
+            "async": false
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "CMD=$(jq -r '.tool_input.command // empty'); if echo \"$CMD\" | grep -qE 'git (commit|push)'; then echo '=== Commit Gate ==='; ROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd); TS_OUT=$(cd \"$ROOT\" && yarn typecheck 2>&1); TS_ERRS=$(echo \"$TS_OUT\" | grep -c 'error TS' || echo 0); if [ \"$TS_ERRS\" -gt 0 ]; then echo '--- TypeScript errors ---'; echo \"$TS_OUT\" | grep 'error TS' | head -15; echo \"BLOCKED: $TS_ERRS TypeScript error(s) must be fixed before committing\"; exit 1; fi; SECRETS=$(git diff --staged 2>/dev/null | grep -iE '(api_key|password|access_token|private_key)[[:space:]]*[=:][[:space:]]*[A-Za-z0-9_+/=-]{16,}' || true); if [ -n \"$SECRETS\" ]; then echo 'BLOCKED: Possible secret detected in staged diff:'; echo \"$SECRETS\"; exit 1; fi; echo 'Clean: commit allowed'; fi",
+            "async": false
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // .tool_response.filePath' | { read -r f; cursor \"$f\"; } 2>/dev/null || true",
+            "async": true
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(jq -r '.tool_input.file_path // empty'); if [[ \"$FILE\" == *ts/*.ts || \"$FILE\" == *ts/*.tsx ]] && [[ \"$FILE\" != *.d.ts ]]; then ROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd); echo \"=== ESLint: $(basename \"$FILE\") ===\"; cd \"$ROOT\" && ./node_modules/.bin/eslint \"$FILE\" 2>&1 | head -30 || true; fi",
+            "async": false
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(jq -r '.tool_input.file_path // empty'); if [[ \"$FILE\" == *.liquid ]]; then echo \"=== Liquid Guard: $(basename \"$FILE\") ===\"; ISSUES=0; if grep -nE '\\{%[-]?[[:space:]]*include[[:space:]]' \"$FILE\" 2>/dev/null; then echo '  ^ ERROR: Use {% render %} with explicit named params, not {% include %}'; ISSUES=1; fi; NODEFERSCRIPTS=$(grep -nE '<script[^>]*>' \"$FILE\" 2>/dev/null | grep -v 'defer' | grep -v 'type=\"application/json\"'); if [ -n \"$NODEFERSCRIPTS\" ]; then echo \"$NODEFERSCRIPTS\"; echo '  ^ WARN: <script> without defer attribute blocks section rendering'; ISSUES=1; fi; [ \"$ISSUES\" -eq 0 ] && echo 'OK'; fi",
+            "async": false
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(jq -r '.tool_input.file_path // empty'); if [[ \"$FILE\" == *brief.md || \"$FILE\" == *test-scenarios.md || \"$FILE\" == *visual-qa-report.md || \"$FILE\" == *task-log.md || \"$FILE\" == *component-api.md || \"$FILE\" == *reuse-map.md ]]; then afplay /System/Library/Sounds/Glass.aiff 2>/dev/null; fi",
+            "async": true
+          }
+        ]
+      }
+    ]
+  },
+  "effortLevel": "low"
+}
