@@ -42,7 +42,7 @@
         <div class="swiper-wrapper">
           {%- for child in image_blocks -%}
             <div class="swiper-slide">
-              {% render child, role: 'swiper', index: forloop.index0 %}
+              {% render child, section: section, role: 'swiper', index: forloop.index0 %}
             </div>
           {%- endfor -%}
         </div>
