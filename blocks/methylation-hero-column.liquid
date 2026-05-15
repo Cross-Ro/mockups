@@ -24,32 +24,15 @@
       {%- endfor -%}
     </div>
 
-    {%- comment -%}Swiper layout — visible on mobile only{%- endcomment -%}
-    <div class="methylation-hero__column-swiper" aria-hidden="true">
-      <carousel-swiper>
-        <script type="application/json">
-          {
-            "slidesPerView": 1.1,
-            "spaceBetween": 12,
-            "grabCursor": true,
-            "loop": {{ loop_enabled | json }},
-            "autoplay": {% if autoplay_on %}{ "delay": {{ autoplay_ms }}, "disableOnInteraction": true }{% else %}false{% endif %},
-            "pagination": true
-          }
-        </script>
-        <div class="swiper">
-          <div class="swiper-wrapper">
-            {%- for child in block.blocks -%}
-              <div class="swiper-slide">
-                {% render child, section: section, role: 'swiper', index: forloop.index0 %}
-              </div>
-            {%- endfor -%}
+    {%- comment -%}Mobile carousel — native CSS scroll-snap, no JS dependency{%- endcomment -%}
+    <div class="methylation-hero__column-swiper">
+      <div class="methylation-hero__scroller" role="region" aria-label="Product images carousel" tabindex="0">
+        {%- for child in block.blocks -%}
+          <div class="methylation-hero__slide">
+            {% render child, section: section, role: 'swiper', index: forloop.index0 %}
           </div>
-          {%- if child_count > 1 -%}
-            <div class="methylation-hero__swiper-pagination swiper-pagination"></div>
-          {%- endif -%}
-        </div>
-      </carousel-swiper>
+        {%- endfor -%}
+      </div>
     </div>
 
   {%- else -%}
