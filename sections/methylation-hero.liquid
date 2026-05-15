@@ -91,16 +91,15 @@
     }
   ],
   "blocks": [
-    { "type": "_methylation-image-stack" },
-    { "type": "_methylation-product-copy" },
-    { "type": "_methylation-authority-box" }
+    { "type": "methylation-hero-column" }
   ],
   "presets": [
     {
       "name": "Methylation Hero",
       "blocks": {
-        "image_stack": {
-          "type": "_methylation-image-stack",
+        "col_left": {
+          "type": "methylation-hero-column",
+          "settings": { "mobile_layout": "swiper" },
           "blocks": {
             "img_1": { "type": "_methylation-image" },
             "img_2": { "type": "_methylation-image" },
@@ -110,38 +109,32 @@
           },
           "block_order": ["img_1", "img_2", "img_3", "img_4", "img_5"]
         },
-        "product_copy": {
-          "type": "_methylation-product-copy",
+        "col_right": {
+          "type": "methylation-hero-column",
           "blocks": {
-            "eyebrow":      { "type": "_methylation-eyebrow" },
+            "eyebrow":         { "type": "_methylation-eyebrow" },
             "headline_serif":  { "type": "_methylation-headline-serif" },
             "headline_script": { "type": "_methylation-headline-script" },
-            "tagline":      { "type": "_methylation-tagline" },
-            "body":         { "type": "_methylation-body" },
-            "vc_1":         { "type": "_methylation-value-card" },
-            "vc_2":         { "type": "_methylation-value-card" },
-            "vc_3":         { "type": "_methylation-value-card" },
-            "price":        { "type": "_methylation-price" },
-            "cta":          { "type": "_methylation-cta" }
+            "tagline":         { "type": "_methylation-tagline" },
+            "body":            { "type": "_methylation-body" },
+            "vc_1":            { "type": "_methylation-value-card" },
+            "vc_2":            { "type": "_methylation-value-card" },
+            "vc_3":            { "type": "_methylation-value-card" },
+            "price":           { "type": "_methylation-price" },
+            "cta":             { "type": "_methylation-cta" },
+            "ahead":           { "type": "_methylation-authority-headline" },
+            "abody":           { "type": "_methylation-authority-body" },
+            "f_1":             { "type": "_methylation-authority-feature" },
+            "f_2":             { "type": "_methylation-authority-feature" },
+            "f_3":             { "type": "_methylation-authority-feature" },
+            "f_4":             { "type": "_methylation-authority-feature" },
+            "f_5":             { "type": "_methylation-authority-feature" },
+            "acta":            { "type": "_methylation-authority-cta" }
           },
-          "block_order": ["eyebrow","headline_serif","headline_script","tagline","body","vc_1","vc_2","vc_3","price","cta"]
-        },
-        "authority": {
-          "type": "_methylation-authority-box",
-          "blocks": {
-            "ahead": { "type": "_methylation-authority-headline" },
-            "abody": { "type": "_methylation-authority-body" },
-            "f_1":   { "type": "_methylation-authority-feature" },
-            "f_2":   { "type": "_methylation-authority-feature" },
-            "f_3":   { "type": "_methylation-authority-feature" },
-            "f_4":   { "type": "_methylation-authority-feature" },
-            "f_5":   { "type": "_methylation-authority-feature" },
-            "acta":  { "type": "_methylation-authority-cta" }
-          },
-          "block_order": ["ahead","abody","f_1","f_2","f_3","f_4","f_5","acta"]
+          "block_order": ["eyebrow","headline_serif","headline_script","tagline","body","vc_1","vc_2","vc_3","price","cta","ahead","abody","f_1","f_2","f_3","f_4","f_5","acta"]
         }
       },
-      "block_order": ["image_stack", "product_copy", "authority"]
+      "block_order": ["col_left", "col_right"]
     }
   ]
 }
