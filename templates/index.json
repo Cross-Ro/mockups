@@ -23,6 +23,7 @@
             "img_1": {
               "type": "_methylation-image",
               "settings": {
+                "image": "shopify://shop_images/HERO.png",
                 "alt": "Couple on the beach at sunset with the 10X Health methylation test kit in foreground",
                 "link": ""
               }
@@ -30,6 +31,7 @@
             "img_2": {
               "type": "_methylation-image",
               "settings": {
+                "image": "shopify://shop_images/MGT_BOX.png",
                 "alt": "Phone showing 1:1 Wellness Advisor call with the methylation kit and $100 store credit",
                 "link": ""
               }
@@ -37,6 +39,7 @@
             "img_3": {
               "type": "_methylation-image",
               "settings": {
+                "image": "shopify://shop_images/RESULTS.png",
                 "alt": "Hands holding the methylation kit showing what's included in your report",
                 "link": ""
               }
@@ -44,6 +47,7 @@
             "img_4": {
               "type": "_methylation-image",
               "settings": {
+                "image": "shopify://shop_images/WHAT_S_INCLUDED.png",
                 "alt": "Unlock your genetic roadmap — phone with genetic results dashboard",
                 "link": ""
               }
@@ -51,6 +55,7 @@
             "img_5": {
               "type": "_methylation-image",
               "settings": {
+                "image": "shopify://shop_images/BUNDLE_DISPLAY.png",
                 "alt": "10X Health System methylation genetic test kit box, top-down view",
                 "link": ""
               }
