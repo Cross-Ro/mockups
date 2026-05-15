@@ -1,0 +1,42 @@
+{%- liquid
+  assign compare_at  = block.settings.compare_at
+  assign final_price = block.settings.final
+  assign save_label  = block.settings.save_label
+-%}
+
+{%- if final_price != blank or compare_at != blank -%}
+  <div class="methylation-hero__price" {{ block.shopify_attributes }}>
+    {%- if compare_at != blank -%}
+      <s class="methylation-hero__price-compare">{{ compare_at | escape }}</s>
+    {%- endif -%}
+    {%- if final_price != blank -%}
+      <span class="methylation-hero__price-final">{{ final_price | escape }}</span>
+    {%- endif -%}
+    {%- if save_label != blank -%}
+      <span class="methylation-hero__price-save">{{ save_label | escape }}</span>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Price",
+  "settings": [
+    {
+      "type": "text",
+      "id": "compare_at",
+      "label": "Compare-at price"
+    },
+    {
+      "type": "text",
+      "id": "final",
+      "label": "Final price"
+    },
+    {
+      "type": "text",
+      "id": "save_label",
+      "label": "Save label"
+    }
+  ]
+}
+{% endschema %}

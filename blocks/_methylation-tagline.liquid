@@ -1,0 +1,18 @@
+{%- if block.settings.text != blank -%}
+  <div class="methylation-hero__tagline" {{ block.shopify_attributes }}>
+    {{ block.settings.text }}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Tagline",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    }
+  ]
+}
+{% endschema %}

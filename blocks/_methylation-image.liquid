@@ -1,0 +1,87 @@
+{%- liquid
+  assign role  = role  | default: 'thumb'
+  assign index = index | default: 0
+  assign img   = block.settings.image
+  assign alt   = img.alt | escape | default: block.settings.alt | escape | default: ''
+  if role == 'hero'
+    assign wrap_class = 'methylation-hero__image-wrap methylation-hero__image-wrap--hero'
+    assign loading    = 'eager'
+    assign fetchprio  = 'high'
+    assign widths_str = '400, 700, 900, 1400'
+    assign sizes_str  = '(min-width: 1024px) 700px, 100vw'
+    assign url_w      = 1400
+    assign placeholder_label = 'Hero image · 700×700'
+    assign placeholder_kind  = 'lifestyle-1'
+  elsif role == 'swiper'
+    assign wrap_class = 'methylation-hero__image-wrap methylation-hero__image-wrap--swiper'
+    if index == 0
+      assign loading   = 'eager'
+      assign fetchprio = 'high'
+    else
+      assign loading   = 'lazy'
+      assign fetchprio = 'auto'
+    endif
+    assign widths_str = '440, 600, 900'
+    assign sizes_str  = '100vw'
+    assign url_w      = 900
+    assign placeholder_label = 'Image'
+    assign placeholders_list = 'lifestyle-1,product-1,lifestyle-2,product-2,product-3' | split: ','
+    assign p_idx = index | modulo: placeholders_list.size
+    assign placeholder_kind = placeholders_list[p_idx]
+  else
+    assign wrap_class = 'methylation-hero__image-wrap methylation-hero__image-wrap--thumb'
+    assign loading    = 'lazy'
+    assign fetchprio  = 'auto'
+    assign widths_str = '200, 350, 700'
+    assign sizes_str  = '(min-width: 1024px) 345px, 50vw'
+    assign url_w      = 700
+    assign placeholder_label = 'Thumb · 345×345'
+    assign placeholders_list = 'product-1,lifestyle-2,product-2,product-3' | split: ','
+    assign p_idx = index | modulo: placeholders_list.size
+    assign placeholder_kind = placeholders_list[p_idx]
+  endif
+-%}
+
+<div class="{{ wrap_class }}" {{ block.shopify_attributes }}>
+  {%- if img != blank -%}
+    {{
+      img
+      | image_url: width: url_w
+      | image_tag:
+        loading: loading,
+        fetchpriority: fetchprio,
+        alt: alt,
+        class: 'methylation-hero__image',
+        widths: widths_str,
+        sizes: sizes_str
+    }}
+  {%- else -%}
+    <div class="methylation-hero__image-placeholder">
+      {{ placeholder_kind | placeholder_svg_tag: 'methylation-hero__image methylation-hero__image--placeholder' }}
+      <span class="methylation-hero__image-placeholder-label">{{ placeholder_label }}</span>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Image",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "alt",
+      "label": "Alt text"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link (optional)"
+    }
+  ]
+}
+{% endschema %}

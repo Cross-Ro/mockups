@@ -1,0 +1,18 @@
+{%- if block.settings.text != blank -%}
+  <div class="methylation-hero__authority-body" {{ block.shopify_attributes }}>
+    {{ block.settings.text }}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Authority body",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Body text"
+    }
+  ]
+}
+{% endschema %}

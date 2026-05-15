@@ -1,0 +1,19 @@
+{%- if block.settings.text != blank -%}
+  <h2 class="methylation-hero__authority-headline" {{ block.shopify_attributes }}>
+    {{ block.settings.text | escape }}
+  </h2>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Authority headline",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Headline",
+      "default": "Doing everything right…"
+    }
+  ]
+}
+{% endschema %}

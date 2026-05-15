@@ -1,0 +1,66 @@
+{%- liquid
+  assign header_types = '_methylation-eyebrow,_methylation-headline-serif,_methylation-headline-script,_methylation-tagline' | split: ','
+  assign header_children = ''
+  assign value_cards = block.blocks | where: 'type', '_methylation-value-card'
+  assign value_card_count = value_cards | size
+  assign body_block  = block.blocks | where: 'type', '_methylation-body'  | first
+  assign price_block = block.blocks | where: 'type', '_methylation-price' | first
+  assign cta_block   = block.blocks | where: 'type', '_methylation-cta'   | first
+-%}
+
+<div class="methylation-hero__copy" {{ block.shopify_attributes }}>
+
+  <div class="methylation-hero__header-group">
+    {%- for child in block.blocks -%}
+      {%- if header_types contains child.type -%}
+        {% render child, section_id: section.id %}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  {%- if body_block -%}
+    <div class="methylation-hero__description-group">
+      {% render body_block %}
+    </div>
+  {%- endif -%}
+
+  {%- if value_card_count > 0 -%}
+    <div class="methylation-hero__value-box">
+      <div class="methylation-hero__value-cards" data-card-count="{{ value_card_count }}">
+        {%- for vc in value_cards -%}
+          {% render vc %}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if price_block or cta_block -%}
+    <div class="methylation-hero__purchase-group">
+      {%- if price_block -%}{% render price_block %}{%- endif -%}
+      {%- if cta_block   -%}{% render cta_block   %}{%- endif -%}
+    </div>
+  {%- endif -%}
+
+</div>
+
+{% schema %}
+{
+  "name": "Product copy",
+  "settings": [],
+  "blocks": [
+    { "type": "_methylation-eyebrow" },
+    { "type": "_methylation-headline-serif" },
+    { "type": "_methylation-headline-script" },
+    { "type": "_methylation-tagline" },
+    { "type": "_methylation-body" },
+    { "type": "_methylation-value-card" },
+    { "type": "_methylation-price" },
+    { "type": "_methylation-cta" }
+  ],
+  "presets": [
+    {
+      "name": "Product copy"
+    }
+  ]
+}
+{% endschema %}

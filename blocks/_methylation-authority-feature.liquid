@@ -1,0 +1,50 @@
+{%- liquid
+  assign icon   = block.settings.icon
+  assign line_1 = block.settings.line_1
+  assign line_2 = block.settings.line_2
+-%}
+
+<div class="methylation-hero__feature" {{ block.shopify_attributes }}>
+  {%- if icon != blank -%}
+    {{
+      icon
+      | image_url: width: 64
+      | image_tag:
+        loading: 'lazy',
+        alt: '',
+        class: 'methylation-hero__feature-icon',
+        widths: '32, 64'
+    }}
+  {%- endif -%}
+  <div class="methylation-hero__feature-text">
+    {%- if line_1 != blank -%}
+      <span class="methylation-hero__feature-line-1">{{ line_1 | escape }}</span>
+    {%- endif -%}
+    {%- if line_2 != blank -%}
+      <span class="methylation-hero__feature-line-2">{{ line_2 | escape }}</span>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Authority feature",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "icon",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "line_1",
+      "label": "Line 1"
+    },
+    {
+      "type": "text",
+      "id": "line_2",
+      "label": "Line 2"
+    }
+  ]
+}
+{% endschema %}

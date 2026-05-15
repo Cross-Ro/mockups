@@ -1,0 +1,19 @@
+{%- if block.settings.text != blank -%}
+  <p class="methylation-hero__headline-script" {{ block.shopify_attributes }}>
+    {{ block.settings.text | escape }}
+  </p>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Headline (script)",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Design Your Summer"
+    }
+  ]
+}
+{% endschema %}

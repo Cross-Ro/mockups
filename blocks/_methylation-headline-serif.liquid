@@ -1,0 +1,23 @@
+{%- if block.settings.text != blank -%}
+  <h1
+    id="methylation-hero-heading-{{ section_id }}"
+    class="methylation-hero__headline-serif"
+    {{ block.shopify_attributes }}
+  >
+    {{ block.settings.text | escape }}
+  </h1>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Headline (display)",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Decode Your Methylation"
+    }
+  ]
+}
+{% endschema %}

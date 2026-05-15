@@ -1,0 +1,19 @@
+{%- if block.settings.text != blank -%}
+  <p class="methylation-hero__eyebrow" {{ block.shopify_attributes }}>
+    {{ block.settings.text | escape }}
+  </p>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Eyebrow",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Summer Methylation Special"
+    }
+  ]
+}
+{% endschema %}

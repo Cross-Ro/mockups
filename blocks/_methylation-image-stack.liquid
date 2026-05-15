@@ -1,0 +1,97 @@
+{%- liquid
+  assign image_blocks = block.blocks | where: 'type', '_methylation-image'
+  assign image_count  = image_blocks | size
+  assign loop_enabled = block.settings.mobile_image_loop
+  assign autoplay_on  = block.settings.mobile_image_autoplay
+  assign autoplay_ms  = block.settings.mobile_image_autoplay_delay | default: 4000
+-%}
+
+<div class="methylation-hero__images" {{ block.shopify_attributes }}>
+
+  {%- comment -%}Desktop grid (hidden on mobile via CSS){%- endcomment -%}
+  <div class="methylation-hero__images--grid">
+    {%- if image_count > 0 -%}
+      {%- assign hero_child = image_blocks | first -%}
+      {% render hero_child, role: 'hero' %}
+    {%- endif -%}
+
+    {%- if image_count > 1 -%}
+      <div class="methylation-hero__image-grid-layout">
+        {%- for child in image_blocks offset: 1 -%}
+          {% render child, role: 'thumb', index: forloop.index0 %}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%}Mobile swiper (hidden on desktop via CSS){%- endcomment -%}
+  <div class="methylation-hero__images--swiper" aria-hidden="true">
+    <carousel-swiper>
+      <script type="application/json">
+        {
+          "slidesPerView": 1.1,
+          "spaceBetween": 12,
+          "grabCursor": true,
+          "loop": {{ loop_enabled | json }},
+          "autoplay": {% if autoplay_on %}{ "delay": {{ autoplay_ms }}, "disableOnInteraction": true }{% else %}false{% endif %},
+          "pagination": true
+        }
+      </script>
+
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          {%- for child in image_blocks -%}
+            <div class="swiper-slide">
+              {% render child, role: 'swiper', index: forloop.index0 %}
+            </div>
+          {%- endfor -%}
+        </div>
+        {%- if image_count > 1 -%}
+          <div class="methylation-hero__swiper-pagination swiper-pagination"></div>
+        {%- endif -%}
+      </div>
+    </carousel-swiper>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image stack",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Mobile carousel"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_image_loop",
+      "label": "Loop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_image_autoplay",
+      "label": "Autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_autoplay_delay",
+      "label": "Autoplay delay",
+      "min": 2000,
+      "max": 8000,
+      "step": 500,
+      "unit": "ms",
+      "default": 4000
+    }
+  ],
+  "blocks": [
+    { "type": "_methylation-image" }
+  ],
+  "presets": [
+    {
+      "name": "Image stack"
+    }
+  ]
+}
+{% endschema %}

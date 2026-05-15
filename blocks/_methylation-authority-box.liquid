@@ -1,0 +1,52 @@
+{%- liquid
+  assign features      = block.blocks | where: 'type', '_methylation-authority-feature'
+  assign feature_count = features | size
+  assign headline_blk  = block.blocks | where: 'type', '_methylation-authority-headline' | first
+  assign body_blk      = block.blocks | where: 'type', '_methylation-authority-body'     | first
+  assign cta_blk       = block.blocks | where: 'type', '_methylation-authority-cta'      | first
+  assign first_feat    = features | first
+-%}
+
+<div class="methylation-hero__authority" {{ block.shopify_attributes }}>
+
+  {%- if headline_blk or body_blk -%}
+    <div class="methylation-hero__authority-header">
+      {%- if headline_blk -%}{% render headline_blk %}{%- endif -%}
+      {%- if body_blk     -%}{% render body_blk     %}{%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if feature_count > 0 -%}
+    <div class="methylation-hero__authority-features-group">
+      <div class="methylation-hero__features" data-feature-count="{{ feature_count }}">
+        {%- for feat in features -%}
+          {% render feat %}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if cta_blk -%}
+    <div class="methylation-hero__authority-cta-group">
+      {% render cta_blk %}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Authority box",
+  "settings": [],
+  "blocks": [
+    { "type": "_methylation-authority-headline" },
+    { "type": "_methylation-authority-body" },
+    { "type": "_methylation-authority-feature" },
+    { "type": "_methylation-authority-cta" }
+  ],
+  "presets": [
+    {
+      "name": "Authority box"
+    }
+  ]
+}
+{% endschema %}
