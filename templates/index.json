@@ -148,59 +148,66 @@
                 "link": "#"
               }
             },
-            "ahead": {
-              "type": "_methylation-authority-headline",
-              "settings": {
-                "text": "Doing everything right and still exhausted?"
-              }
-            },
-            "abody": {
-              "type": "_methylation-authority-body",
-              "settings": {
-                "text": "<p>Your DNA holds the blueprint for how your body makes energy, handles stress, and recovers. This summer, turn that information into action.</p>"
-              }
-            },
-            "f_1": {
-              "type": "_methylation-authority-feature",
-              "settings": {
-                "line_1": "Easy",
-                "line_2": "At-Home Collection"
-              }
-            },
-            "f_2": {
-              "type": "_methylation-authority-feature",
-              "settings": {
-                "line_1": "CLIA-",
-                "line_2": "Certified Lab Partner"
-              }
-            },
-            "f_3": {
-              "type": "_methylation-authority-feature",
-              "settings": {
-                "line_1": "Backed By",
-                "line_2": "10X Medical Experts"
-              }
-            },
-            "f_4": {
-              "type": "_methylation-authority-feature",
-              "settings": {
-                "line_1": "100% Private",
-                "line_2": "Data"
-              }
-            },
-            "f_5": {
-              "type": "_methylation-authority-feature",
-              "settings": {
-                "line_1": "HIPAA-",
-                "line_2": "Compliant"
-              }
-            },
-            "acta": {
-              "type": "_methylation-authority-cta",
-              "settings": {
-                "label": "DECODE MY METHYLATION",
-                "link": "#"
-              }
+            "authority_box": {
+              "type": "_methylation-authority-box",
+              "settings": {},
+              "blocks": {
+                "ahead": {
+                  "type": "_methylation-authority-headline",
+                  "settings": {
+                    "text": "Doing everything right and still exhausted?"
+                  }
+                },
+                "abody": {
+                  "type": "_methylation-authority-body",
+                  "settings": {
+                    "text": "<p>Your DNA holds the blueprint for how your body makes energy, handles stress, and recovers. This summer, turn that information into action.</p>"
+                  }
+                },
+                "f_1": {
+                  "type": "_methylation-authority-feature",
+                  "settings": {
+                    "line_1": "Easy",
+                    "line_2": "At-Home Collection"
+                  }
+                },
+                "f_2": {
+                  "type": "_methylation-authority-feature",
+                  "settings": {
+                    "line_1": "CLIA-",
+                    "line_2": "Certified Lab Partner"
+                  }
+                },
+                "f_3": {
+                  "type": "_methylation-authority-feature",
+                  "settings": {
+                    "line_1": "Backed By",
+                    "line_2": "10X Medical Experts"
+                  }
+                },
+                "f_4": {
+                  "type": "_methylation-authority-feature",
+                  "settings": {
+                    "line_1": "100% Private",
+                    "line_2": "Data"
+                  }
+                },
+                "f_5": {
+                  "type": "_methylation-authority-feature",
+                  "settings": {
+                    "line_1": "HIPAA-",
+                    "line_2": "Compliant"
+                  }
+                },
+                "acta": {
+                  "type": "_methylation-authority-cta",
+                  "settings": {
+                    "label": "DECODE MY METHYLATION",
+                    "link": "#"
+                  }
+                }
+              },
+              "block_order": ["ahead","abody","f_1","f_2","f_3","f_4","f_5","acta"]
             }
           },
           "block_order": [
@@ -214,14 +221,7 @@
             "vc_3",
             "price",
             "cta",
-            "ahead",
-            "abody",
-            "f_1",
-            "f_2",
-            "f_3",
-            "f_4",
-            "f_5",
-            "acta"
+            "authority_box"
           ]
         }
       },
