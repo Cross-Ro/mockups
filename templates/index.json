@@ -225,6 +225,10 @@
           ]
         }
       },
+      "block_order": [
+        "col_left",
+        "col_right"
+      ],
       "settings": {
         "color_scheme": "scheme-1",
         "container_padding_top": 48,
