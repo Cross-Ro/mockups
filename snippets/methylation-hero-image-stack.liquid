@@ -25,54 +25,47 @@
     DESKTOP GRID (hidden on mobile via CSS)
   ——————————————————————————————————————————{%- endcomment -%}
   <div class="methylation-hero__images--grid" aria-hidden="false">
-    {%- for block in image_blocks -%}
-      {%- if forloop.first -%}
-        {%- comment -%}Hero image — full width, eager load{%- endcomment -%}
-        <div class="methylation-hero__image-wrap methylation-hero__image-wrap--hero" {{ block.shopify_attributes }}>
-          {%- if block.settings.image != blank -%}
-            {%- assign hero_alt = block.settings.image.alt | escape | default: block.settings.alt | escape | default: '' -%}
-            {{
-              block.settings.image
-              | image_url: width: 1400
-              | image_tag:
-                loading: 'eager',
-                fetchpriority: 'high',
-                alt: hero_alt,
-                class: 'methylation-hero__image',
-                widths: '400, 700, 900, 1400',
-                sizes: '(min-width: 1024px) 700px, 100vw'
-            }}
-          {%- endif -%}
-        </div>
-
-        {%- comment -%}Supporting 2×2 grid — images 2–5{%- endcomment -%}
-        {%- if image_count > 1 -%}
-          <div class="methylation-hero__image-grid-layout">
+    {%- if image_count > 0 -%}
+      {%- assign hero_block = image_blocks | first -%}
+      <div class="methylation-hero__image-wrap methylation-hero__image-wrap--hero" {{ hero_block.shopify_attributes }}>
+        {%- if hero_block.settings.image != blank -%}
+          {%- assign hero_alt = hero_block.settings.image.alt | escape | default: hero_block.settings.alt | escape | default: '' -%}
+          {{
+            hero_block.settings.image
+            | image_url: width: 1400
+            | image_tag:
+              loading: 'eager',
+              fetchpriority: 'high',
+              alt: hero_alt,
+              class: 'methylation-hero__image',
+              widths: '400, 700, 900, 1400',
+              sizes: '(min-width: 1024px) 700px, 100vw'
+          }}
         {%- endif -%}
+      </div>
+    {%- endif -%}
 
-      {%- else -%}
-        {%- comment -%}Supporting thumbnails (images 2–5){%- endcomment -%}
-        <div class="methylation-hero__image-wrap methylation-hero__image-wrap--thumb" {{ block.shopify_attributes }}>
-          {%- if block.settings.image != blank -%}
-            {%- assign thumb_alt = block.settings.image.alt | escape | default: block.settings.alt | escape | default: '' -%}
-            {{
-              block.settings.image
-              | image_url: width: 700
-              | image_tag:
-                loading: 'lazy',
-                alt: thumb_alt,
-                class: 'methylation-hero__image',
-                widths: '200, 350, 700',
-                sizes: '(min-width: 1024px) 345px, 50vw'
-            }}
-          {%- endif -%}
-        </div>
-
-        {%- if forloop.last and image_count > 1 -%}
+    {%- if image_count > 1 -%}
+      <div class="methylation-hero__image-grid-layout">
+        {%- for block in image_blocks offset: 1 -%}
+          <div class="methylation-hero__image-wrap methylation-hero__image-wrap--thumb" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {%- assign thumb_alt = block.settings.image.alt | escape | default: block.settings.alt | escape | default: '' -%}
+              {{
+                block.settings.image
+                | image_url: width: 700
+                | image_tag:
+                  loading: 'lazy',
+                  alt: thumb_alt,
+                  class: 'methylation-hero__image',
+                  widths: '200, 350, 700',
+                  sizes: '(min-width: 1024px) 345px, 50vw'
+              }}
+            {%- endif -%}
           </div>
-        {%- endif -%}
-      {%- endif -%}
-    {%- endfor -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
   </div>
 
   {%- comment -%}——————————————————————————————————————————
