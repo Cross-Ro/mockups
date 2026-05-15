@@ -54,24 +54,16 @@
 
       {%- when 'value_card' -%}
         {%- comment -%}
-          Value cards are grouped and rendered in a 3-column grid.
-          We render the grid wrapper when we hit the first value_card block,
-          then close it after the last value_card in the sequence.
-          Approach: track index by comparing to first/last value_card block.
+          Render the full value-card grid once, when the first value_card
+          block is encountered. Subsequent value_card iterations are skipped.
         {%- endcomment -%}
-        {%- assign vc_size = value_card_blocks | size -%}
-        {%- if vc_size > 0 -%}
-          {%- assign first_vc = value_card_blocks | first -%}
-          {%- assign last_vc  = value_card_blocks | last -%}
-          {%- if block.id == first_vc.id -%}
-            <div class="methylation-hero__value-cards tw-grid tw-grid-cols-3 tw-gap-4">
-          {%- endif -%}
-
-          {% render 'methylation-hero-value-card', block: block %}
-
-          {%- if block.id == last_vc.id -%}
-            </div>
-          {%- endif -%}
+        {%- assign first_vc = value_card_blocks | first -%}
+        {%- if first_vc and block.id == first_vc.id -%}
+          <div class="methylation-hero__value-cards tw-grid tw-grid-cols-3 tw-gap-4">
+            {%- for vc_block in value_card_blocks -%}
+              {% render 'methylation-hero-value-card', block: vc_block %}
+            {%- endfor -%}
+          </div>
         {%- endif -%}
 
       {%- when 'price' -%}
