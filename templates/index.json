@@ -106,6 +106,7 @@
             "vc_1": {
               "type": "_methylation-value-card",
               "settings": {
+                "icon": "shopify://shop_images/DNA_Icon_99629d50-a9dd-4fea-ba7a-15054a58ef8e.png",
                 "label": "METHYLATION GENETIC TEST",
                 "value": "$599 VALUE",
                 "accent": "#152f4f"
@@ -114,6 +115,7 @@
             "vc_2": {
               "type": "_methylation-value-card",
               "settings": {
+                "icon": "shopify://shop_images/Advisor_Icon_b3472bba-c213-4a03-9893-0752df7b8c1f.png",
                 "label": "1:1 WELLNESS ADVISOR CALL",
                 "value": "$47 VALUE",
                 "accent": "#c99b65"
@@ -122,6 +124,7 @@
             "vc_3": {
               "type": "_methylation-value-card",
               "settings": {
+                "icon": "shopify://shop_images/Gift_Icon_dbdcc4cc-ea7e-4872-bdac-a1613468ddf1.png",
                 "label": "$100 FIRST PROTOCOL CREDIT",
                 "value": "$100 VALUE",
                 "accent": "#d2242a"
