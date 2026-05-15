@@ -1,0 +1,115 @@
+{%- doc -%}
+  Renders the product copy column for the methylation-hero section.
+  Iterates section.blocks in theme-editor order and renders each block type.
+
+  @param {object} section - The Shopify section object
+{%- enddoc -%}
+
+{%- liquid
+  assign value_card_blocks = section.blocks | where: 'type', 'value_card'
+-%}
+
+<div class="methylation-hero__copy">
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+
+      {%- when 'eyebrow' -%}
+        {%- if block.settings.text != blank -%}
+          <p class="methylation-hero__eyebrow" {{ block.shopify_attributes }}>
+            {{ block.settings.text | escape }}
+          </p>
+        {%- endif -%}
+
+      {%- when 'headline_serif' -%}
+        {%- if block.settings.text != blank -%}
+          <h1
+            id="methylation-hero-heading"
+            class="methylation-hero__headline-serif"
+            {{ block.shopify_attributes }}
+          >
+            {{ block.settings.text | escape }}
+          </h1>
+        {%- endif -%}
+
+      {%- when 'headline_script' -%}
+        {%- if block.settings.text != blank -%}
+          <p class="methylation-hero__headline-script" {{ block.shopify_attributes }}>
+            {{ block.settings.text | escape }}
+          </p>
+        {%- endif -%}
+
+      {%- when 'tagline' -%}
+        {%- if block.settings.text != blank -%}
+          <div class="methylation-hero__tagline" {{ block.shopify_attributes }}>
+            {{ block.settings.text }}
+          </div>
+        {%- endif -%}
+
+      {%- when 'body' -%}
+        {%- if block.settings.text != blank -%}
+          <div class="methylation-hero__body" {{ block.shopify_attributes }}>
+            {{ block.settings.text }}
+          </div>
+        {%- endif -%}
+
+      {%- when 'value_card' -%}
+        {%- comment -%}
+          Value cards are grouped and rendered in a 3-column grid.
+          We render the grid wrapper when we hit the first value_card block,
+          then close it after the last value_card in the sequence.
+          Approach: track index by comparing to first/last value_card block.
+        {%- endcomment -%}
+        {%- assign vc_size = value_card_blocks | size -%}
+        {%- if vc_size > 0 -%}
+          {%- assign first_vc = value_card_blocks | first -%}
+          {%- assign last_vc  = value_card_blocks | last -%}
+          {%- if block.id == first_vc.id -%}
+            <div class="methylation-hero__value-cards tw-grid tw-grid-cols-3 tw-gap-4">
+          {%- endif -%}
+
+          {% render 'methylation-hero-value-card', block: block %}
+
+          {%- if block.id == last_vc.id -%}
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+
+      {%- when 'price' -%}
+        {%- liquid
+          assign compare_at = block.settings.compare_at
+          assign final_price = block.settings.final
+          assign save_label  = block.settings.save_label
+        -%}
+        {%- if final_price != blank or compare_at != blank -%}
+          <div class="methylation-hero__price" {{ block.shopify_attributes }}>
+            {%- if compare_at != blank -%}
+              <s class="methylation-hero__price-compare">{{ compare_at | escape }}</s>
+            {%- endif -%}
+            {%- if final_price != blank -%}
+              <span class="methylation-hero__price-final">{{ final_price | escape }}</span>
+            {%- endif -%}
+            {%- if save_label != blank -%}
+              <span class="methylation-hero__price-save">{{ save_label | escape }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+      {%- when 'cta' -%}
+        {%- liquid
+          assign cta_label = block.settings.label | default: 'Claim My Bundle'
+          assign cta_link  = block.settings.link  | default: '#'
+        -%}
+        {%- if cta_label != blank -%}
+          <a
+            href="{{ cta_link }}"
+            class="methylation-hero__cta"
+            data-cta="methylation-hero"
+            {{ block.shopify_attributes }}
+          >
+            {{ cta_label | escape }}
+          </a>
+        {%- endif -%}
+
+    {%- endcase -%}
+  {%- endfor -%}
+</div>
