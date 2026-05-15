@@ -1,0 +1,27 @@
+{%- liquid
+  assign child_count = block.blocks.size
+-%}
+
+<div class="methylation-hero__details" {{ block.shopify_attributes }}>
+  {%- if child_count > 0 -%}
+    {%- for child in block.blocks -%}
+      {% render child, section: section %}
+    {%- endfor -%}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Hero details",
+  "blocks": [
+    { "type": "_methylation-eyebrow" },
+    { "type": "_methylation-headline-serif" },
+    { "type": "_methylation-headline-script" },
+    { "type": "_methylation-tagline" },
+    { "type": "_methylation-body" },
+    { "type": "_methylation-value-cards" },
+    { "type": "_methylation-price" },
+    { "type": "_methylation-cta" }
+  ]
+}
+{% endschema %}
