@@ -1,3 +1,10 @@
+{% doc %}
+  Renders a single methylation hero image (hero, thumb, or swiper slide).
+
+  @param {string} [role]  - One of 'hero', 'thumb', or 'swiper'. Defaults to 'thumb'.
+  @param {number} [index] - Zero-based index within the parent loop (used for placeholder rotation).
+{% enddoc %}
+
 {%- liquid
   assign role  = role  | default: 'thumb'
   assign index = index | default: 0

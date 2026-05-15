@@ -1,3 +1,9 @@
+{% doc %}
+  Renders the display (Oswald) headline for the methylation hero.
+
+  @param {string} [section_id] - Owning section id, used to make the anchor id unique per instance.
+{% enddoc %}
+
 {%- if block.settings.text != blank -%}
   <h1
     id="methylation-hero-heading-{{ section_id }}"

@@ -1,6 +1,5 @@
 {%- liquid
   assign header_types = '_methylation-eyebrow,_methylation-headline-serif,_methylation-headline-script,_methylation-tagline' | split: ','
-  assign header_children = ''
   assign value_cards = block.blocks | where: 'type', '_methylation-value-card'
   assign value_card_count = value_cards | size
   assign body_block  = block.blocks | where: 'type', '_methylation-body'  | first

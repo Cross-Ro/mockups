@@ -4,7 +4,6 @@
   assign headline_blk  = block.blocks | where: 'type', '_methylation-authority-headline' | first
   assign body_blk      = block.blocks | where: 'type', '_methylation-authority-body'     | first
   assign cta_blk       = block.blocks | where: 'type', '_methylation-authority-cta'      | first
-  assign first_feat    = features | first
 -%}
 
 <div class="methylation-hero__authority" {{ block.shopify_attributes }}>
