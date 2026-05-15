@@ -180,6 +180,11 @@
                     "link": "#"
                   },
                   "blocks": {}
+                },
+                "payment_terms": {
+                  "type": "_methylation-payment-terms",
+                  "settings": {},
+                  "blocks": {}
                 }
               },
               "block_order": [
@@ -190,7 +195,8 @@
                 "body",
                 "value_cards",
                 "price",
-                "cta"
+                "cta",
+                "payment_terms"
               ]
             },
             "authority_box": {
