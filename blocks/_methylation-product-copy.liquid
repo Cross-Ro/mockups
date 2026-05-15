@@ -1,43 +1,50 @@
 {%- liquid
-  assign header_types = '_methylation-eyebrow,_methylation-headline-serif,_methylation-headline-script,_methylation-tagline' | split: ','
-  assign value_cards = block.blocks | where: 'type', '_methylation-value-card'
-  assign value_card_count = value_cards | size
-  assign body_block  = block.blocks | where: 'type', '_methylation-body'  | first
-  assign price_block = block.blocks | where: 'type', '_methylation-price' | first
-  assign cta_block   = block.blocks | where: 'type', '_methylation-cta'   | first
+  assign value_card_count = 0
+  for child in block.blocks
+    if child.id contains '_vc_' or child.id contains '__vc_'
+      assign value_card_count = value_card_count | plus: 1
+    endif
+  endfor
 -%}
 
-<div class="methylation-hero__copy" {{ block.shopify_attributes }} data-debug-count="{{ block.blocks.size }}">
+<div class="methylation-hero__copy" {{ block.shopify_attributes }}>
 
   <div class="methylation-hero__header-group">
     {%- for child in block.blocks -%}
-      <span data-debug-type="{{ child.type }}" data-debug-id="{{ child.id }}"></span>
-      {% render child, section: section %}
+      {%- assign cid = child.id -%}
+      {%- if cid contains '_eyebrow' or cid contains '_headline_serif' or cid contains '_headline_script' or cid contains '_tagline' -%}
+        {% render child, section: section %}
+      {%- endif -%}
     {%- endfor -%}
   </div>
 
-  {%- if body_block -%}
-    <div class="methylation-hero__description-group">
-      {% render body_block, section: section %}
-    </div>
-  {%- endif -%}
+  <div class="methylation-hero__description-group">
+    {%- for child in block.blocks -%}
+      {%- if child.id contains '_body' -%}
+        {% render child, section: section %}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
 
   {%- if value_card_count > 0 -%}
     <div class="methylation-hero__value-box">
       <div class="methylation-hero__value-cards" data-card-count="{{ value_card_count }}">
-        {%- for vc in value_cards -%}
-          {% render vc, section: section %}
+        {%- for child in block.blocks -%}
+          {%- if child.id contains '_vc_' -%}
+            {% render child, section: section %}
+          {%- endif -%}
         {%- endfor -%}
       </div>
     </div>
   {%- endif -%}
 
-  {%- if price_block or cta_block -%}
-    <div class="methylation-hero__purchase-group">
-      {%- if price_block -%}{% render price_block, section: section %}{%- endif -%}
-      {%- if cta_block   -%}{% render cta_block,   section: section %}{%- endif -%}
-    </div>
-  {%- endif -%}
+  <div class="methylation-hero__purchase-group">
+    {%- for child in block.blocks -%}
+      {%- if child.id contains '_price' or child.id contains '_cta' -%}
+        {% render child, section: section %}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
 
 </div>
 

@@ -1,5 +1,5 @@
 {%- liquid
-  assign image_blocks = block.blocks | where: 'type', '_methylation-image'
+  assign image_blocks = block.blocks
   assign image_count  = image_blocks | size
   assign loop_enabled = block.settings.mobile_image_loop
   assign autoplay_on  = block.settings.mobile_image_autoplay
