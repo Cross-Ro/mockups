@@ -16,7 +16,11 @@
     {%- comment -%}Stacked layout — visible on desktop only{%- endcomment -%}
     <div class="methylation-hero__column-stack">
       {%- for child in block.blocks -%}
-        {% render child, section: section, role: 'thumb', index: forloop.index0 %}
+        {%- if forloop.first -%}
+          {% render child, section: section, role: 'hero', index: 0 %}
+        {%- else -%}
+          {% render child, section: section, role: 'thumb', index: forloop.index0 %}
+        {%- endif -%}
       {%- endfor -%}
     </div>
 
