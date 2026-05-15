@@ -66,6 +66,13 @@
                   widths: '200, 350, 700',
                   sizes: '(min-width: 1024px) 345px, 50vw'
               }}
+            {%- else -%}
+              <div class="methylation-hero__image-placeholder">
+                {%- assign placeholder_kinds = 'product-1,lifestyle-2,product-2,product-3' | split: ',' -%}
+                {%- assign ph_index = forloop.index0 | modulo: placeholder_kinds.size -%}
+                {{ placeholder_kinds[ph_index] | placeholder_svg_tag: 'methylation-hero__image methylation-hero__image--placeholder' }}
+                <span class="methylation-hero__image-placeholder-label">Thumb {{ forloop.index | plus: 1 }} · 345×345</span>
+              </div>
             {%- endif -%}
           </div>
         {%- endfor -%}
@@ -120,6 +127,13 @@
                         sizes: '100vw'
                     }}
                   {%- endif -%}
+                {%- else -%}
+                  <div class="methylation-hero__image-placeholder">
+                    {%- assign mob_placeholders = 'lifestyle-1,product-1,lifestyle-2,product-2,product-3' | split: ',' -%}
+                    {%- assign mph_index = forloop.index0 | modulo: mob_placeholders.size -%}
+                    {{ mob_placeholders[mph_index] | placeholder_svg_tag: 'methylation-hero__image methylation-hero__image--placeholder' }}
+                    <span class="methylation-hero__image-placeholder-label">Image {{ forloop.index }}</span>
+                  </div>
                 {%- endif -%}
               </div>
             </div>
