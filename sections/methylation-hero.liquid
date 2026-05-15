@@ -1,0 +1,464 @@
+{{ 'methylation-hero.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign padding_top_desktop    = section.settings.container_padding_top    | default: 48
+  assign padding_bottom_desktop = section.settings.container_padding_bottom | default: 48
+  assign padding_top_mobile     = section.settings.container_padding_top_mobile    | default: 24
+  assign padding_bottom_mobile  = section.settings.container_padding_bottom_mobile | default: 24
+
+  assign authority_headline_block = section.blocks | where: 'type', 'authority_headline' | first
+  assign authority_body_block     = section.blocks | where: 'type', 'authority_body'     | first
+  assign authority_cta_block      = section.blocks | where: 'type', 'authority_cta'      | first
+  assign authority_features       = section.blocks | where: 'type', 'authority_feature'
+-%}
+
+<section
+  class="methylation-hero color-{{ section.settings.color_scheme }}"
+  style="
+    --padding-top: {{ padding_top_mobile }}px;
+    --padding-bottom: {{ padding_bottom_mobile }}px;
+  "
+  aria-labelledby="methylation-hero-heading"
+  {{ section.shopify_attributes }}
+>
+  {%- comment -%}
+    Inline style override for desktop padding via a media query is not
+    possible in inline styles. We use a scoped CSS custom property approach:
+    mobile vars set inline, desktop override emitted as a <style> block.
+  {%- endcomment -%}
+  <style>
+    @media (min-width: 1024px) {
+      #shopify-section-{{ section.id }} .methylation-hero {
+        --padding-top:    {{ padding_top_desktop }}px;
+        --padding-bottom: {{ padding_bottom_desktop }}px;
+      }
+    }
+  </style>
+
+  <div class="methylation-hero__inner">
+
+    {%- comment -%}Left column: image stack{%- endcomment -%}
+    {% render 'methylation-hero-image-stack', section: section %}
+
+    {%- comment -%}Right column: product copy + authority box{%- endcomment -%}
+    <div class="methylation-hero__right">
+
+      {%- comment -%}Product copy (eyebrow → headline → price → CTA){%- endcomment -%}
+      {% render 'methylation-hero-product-copy', section: section %}
+
+      {%- comment -%}Authority / credibility box{%- endcomment -%}
+      {%- if authority_headline_block != blank
+          or authority_body_block != blank
+          or authority_features.size > 0
+          or authority_cta_block != blank -%}
+        <div class="methylation-hero__authority">
+
+          {%- if authority_headline_block != blank -%}
+            {%- if authority_headline_block.settings.text != blank -%}
+              <h2
+                class="methylation-hero__authority-headline"
+                {{ authority_headline_block.shopify_attributes }}
+              >
+                {{ authority_headline_block.settings.text | escape }}
+              </h2>
+            {%- endif -%}
+          {%- endif -%}
+
+          {%- if authority_body_block != blank -%}
+            {%- if authority_body_block.settings.text != blank -%}
+              <div
+                class="methylation-hero__authority-body"
+                {{ authority_body_block.shopify_attributes }}
+              >
+                {{ authority_body_block.settings.text }}
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+
+          {%- if authority_features.size > 0 -%}
+            <div class="methylation-hero__features">
+              {%- for block in authority_features -%}
+                {% render 'methylation-hero-feature', block: block %}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          {%- if authority_cta_block != blank -%}
+            {%- liquid
+              assign auth_label = authority_cta_block.settings.label | default: 'Decode My Methylation'
+              assign auth_link  = authority_cta_block.settings.link  | default: '#'
+            -%}
+            {%- if auth_label != blank -%}
+              <a
+                href="{{ auth_link }}"
+                class="methylation-hero__authority-cta"
+                data-cta="methylation-hero-authority"
+                {{ authority_cta_block.shopify_attributes }}
+              >
+                {{ auth_label | escape }}
+              </a>
+            {%- endif -%}
+          {%- endif -%}
+
+        </div>
+      {%- endif -%}
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Methylation Hero",
+  "tag": "div",
+  "class": "methylation-hero-section-wrapper",
+  "max_blocks": 17,
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Spacing"
+    },
+    {
+      "type": "range",
+      "id": "container_padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "container_padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Mobile Spacing"
+    },
+    {
+      "type": "range",
+      "id": "container_padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "container_padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "desktop_layout",
+      "label": "Desktop layout",
+      "options": [
+        { "value": "2-col", "label": "Two column" }
+      ],
+      "default": "2-col"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Carousel"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_image_loop",
+      "label": "Loop carousel",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_image_autoplay",
+      "label": "Autoplay carousel",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_autoplay_delay",
+      "label": "Autoplay delay",
+      "min": 2000,
+      "max": 8000,
+      "step": 500,
+      "unit": "ms",
+      "default": 4000
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Alt text",
+          "info": "Used when the image has no alt text set in the file manager."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)"
+        }
+      ]
+    },
+    {
+      "type": "eyebrow",
+      "name": "Eyebrow label",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Summer Methylation Special"
+        }
+      ]
+    },
+    {
+      "type": "headline_serif",
+      "name": "Headline (display)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Decode Your Methylation"
+        }
+      ]
+    },
+    {
+      "type": "headline_script",
+      "name": "Headline (script)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Design Your Summer"
+        }
+      ]
+    },
+    {
+      "type": "tagline",
+      "name": "Tagline",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "body",
+      "name": "Body text",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "value_card",
+      "name": "Value card",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon image"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "info": "Short descriptor (e.g. 'Results in')"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "info": "Key metric or benefit (e.g. '6 weeks')"
+        },
+        {
+          "type": "color",
+          "id": "accent",
+          "label": "Accent color",
+          "info": "Optional highlight color for card border and bar."
+        }
+      ]
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "compare_at",
+          "label": "Compare-at price",
+          "info": "Shown with strikethrough (e.g. '$499')"
+        },
+        {
+          "type": "text",
+          "id": "final",
+          "label": "Final price",
+          "info": "Displayed prominently (e.g. '$349')"
+        },
+        {
+          "type": "text",
+          "id": "save_label",
+          "label": "Save label",
+          "info": "Optional pill text (e.g. 'Save $150')"
+        }
+      ]
+    },
+    {
+      "type": "cta",
+      "name": "Primary CTA",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Button label",
+          "default": "Claim My Bundle"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button link"
+        }
+      ]
+    },
+    {
+      "type": "authority_headline",
+      "name": "Authority headline",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Headline",
+          "default": "Doing everything right…"
+        }
+      ]
+    },
+    {
+      "type": "authority_body",
+      "name": "Authority body",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Body text"
+        }
+      ]
+    },
+    {
+      "type": "authority_feature",
+      "name": "Authority feature",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon image"
+        },
+        {
+          "type": "text",
+          "id": "line_1",
+          "label": "Line 1",
+          "info": "Feature name or bold label"
+        },
+        {
+          "type": "text",
+          "id": "line_2",
+          "label": "Line 2",
+          "info": "Supporting descriptor"
+        }
+      ]
+    },
+    {
+      "type": "authority_cta",
+      "name": "Authority CTA",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Button label",
+          "default": "Decode My Methylation"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Methylation Hero",
+      "blocks": [
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "eyebrow" },
+        { "type": "headline_serif" },
+        { "type": "headline_script" },
+        { "type": "tagline" },
+        { "type": "value_card" },
+        { "type": "value_card" },
+        { "type": "value_card" },
+        { "type": "price" },
+        { "type": "cta" },
+        { "type": "authority_headline" },
+        { "type": "authority_body" },
+        { "type": "authority_feature" },
+        { "type": "authority_feature" },
+        { "type": "authority_cta" }
+      ]
+    }
+  ]
+}
+{% endschema %}
