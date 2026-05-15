@@ -1,8 +1,5 @@
 {%- liquid
   assign mobile_layout = block.settings.mobile_layout | default: 'stacked'
-  assign loop_enabled  = block.settings.mobile_image_loop
-  assign autoplay_on   = block.settings.mobile_image_autoplay
-  assign autoplay_ms   = block.settings.mobile_image_autoplay_delay | default: 4000
   assign child_count   = block.blocks.size
   assign column_class  = 'methylation-hero__column'
   if mobile_layout == 'swiper'
