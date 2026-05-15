@@ -1,0 +1,118 @@
+{%- liquid
+  assign mobile_layout = block.settings.mobile_layout | default: 'stacked'
+  assign loop_enabled  = block.settings.mobile_image_loop
+  assign autoplay_on   = block.settings.mobile_image_autoplay
+  assign autoplay_ms   = block.settings.mobile_image_autoplay_delay | default: 4000
+  assign child_count   = block.blocks.size
+  assign column_class  = 'methylation-hero__column'
+  if mobile_layout == 'swiper'
+    assign column_class = 'methylation-hero__column methylation-hero__column--swiper-mobile'
+  endif
+-%}
+
+<div class="{{ column_class }}" {{ block.shopify_attributes }}>
+  {%- if mobile_layout == 'swiper' and child_count > 0 -%}
+
+    {%- comment -%}Stacked layout — visible on desktop only{%- endcomment -%}
+    <div class="methylation-hero__column-stack">
+      {%- for child in block.blocks -%}
+        {% render child, section: section, role: 'thumb', index: forloop.index0 %}
+      {%- endfor -%}
+    </div>
+
+    {%- comment -%}Swiper layout — visible on mobile only{%- endcomment -%}
+    <div class="methylation-hero__column-swiper" aria-hidden="true">
+      <carousel-swiper>
+        <script type="application/json">
+          {
+            "slidesPerView": 1.1,
+            "spaceBetween": 12,
+            "grabCursor": true,
+            "loop": {{ loop_enabled | json }},
+            "autoplay": {% if autoplay_on %}{ "delay": {{ autoplay_ms }}, "disableOnInteraction": true }{% else %}false{% endif %},
+            "pagination": true
+          }
+        </script>
+        <div class="swiper">
+          <div class="swiper-wrapper">
+            {%- for child in block.blocks -%}
+              <div class="swiper-slide">
+                {% render child, section: section, role: 'swiper', index: forloop.index0 %}
+              </div>
+            {%- endfor -%}
+          </div>
+          {%- if child_count > 1 -%}
+            <div class="methylation-hero__swiper-pagination swiper-pagination"></div>
+          {%- endif -%}
+        </div>
+      </carousel-swiper>
+    </div>
+
+  {%- else -%}
+    {%- for child in block.blocks -%}
+      {% render child, section: section %}
+    {%- endfor -%}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Hero column",
+  "settings": [
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile layout",
+      "options": [
+        { "value": "stacked", "label": "Stacked" },
+        { "value": "swiper",  "label": "Swiper carousel" }
+      ],
+      "default": "stacked"
+    },
+    {
+      "type": "header",
+      "content": "Mobile carousel (when swiper)"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_image_loop",
+      "label": "Loop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_image_autoplay",
+      "label": "Autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_autoplay_delay",
+      "label": "Autoplay delay",
+      "min": 2000,
+      "max": 8000,
+      "step": 500,
+      "unit": "ms",
+      "default": 4000
+    }
+  ],
+  "blocks": [
+    { "type": "_methylation-image" },
+    { "type": "_methylation-eyebrow" },
+    { "type": "_methylation-headline-serif" },
+    { "type": "_methylation-headline-script" },
+    { "type": "_methylation-tagline" },
+    { "type": "_methylation-body" },
+    { "type": "_methylation-value-card" },
+    { "type": "_methylation-price" },
+    { "type": "_methylation-cta" },
+    { "type": "_methylation-authority-headline" },
+    { "type": "_methylation-authority-body" },
+    { "type": "_methylation-authority-feature" },
+    { "type": "_methylation-authority-cta" }
+  ],
+  "presets": [
+    { "name": "Hero column" }
+  ]
+}
+{% endschema %}
