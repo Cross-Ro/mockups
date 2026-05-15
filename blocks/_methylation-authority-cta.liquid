@@ -10,7 +10,8 @@
     data-cta="methylation-hero-authority"
     {{ block.shopify_attributes }}
   >
-    {{ label | escape }}
+    <span class="methylation-hero__cta-label">{{ label | escape }}</span>
+    {%- render 'methylation-cart-icon' -%}
   </a>
 {%- endif -%}
 
