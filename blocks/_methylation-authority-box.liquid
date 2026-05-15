@@ -10,8 +10,8 @@
 
   {%- if headline_blk or body_blk -%}
     <div class="methylation-hero__authority-header">
-      {%- if headline_blk -%}{% render headline_blk %}{%- endif -%}
-      {%- if body_blk     -%}{% render body_blk     %}{%- endif -%}
+      {%- if headline_blk -%}{% render headline_blk, section: section %}{%- endif -%}
+      {%- if body_blk     -%}{% render body_blk,     section: section %}{%- endif -%}
     </div>
   {%- endif -%}
 
@@ -19,7 +19,7 @@
     <div class="methylation-hero__authority-features-group">
       <div class="methylation-hero__features" data-feature-count="{{ feature_count }}">
         {%- for feat in features -%}
-          {% render feat %}
+          {% render feat, section: section %}
         {%- endfor -%}
       </div>
     </div>
@@ -27,7 +27,7 @@
 
   {%- if cta_blk -%}
     <div class="methylation-hero__authority-cta-group">
-      {% render cta_blk %}
+      {% render cta_blk, section: section %}
     </div>
   {%- endif -%}
 </div>
