@@ -8,6 +8,205 @@
  * ------------------------------------------------------------
  */{
   "sections": {
+    "methylation_hero_MhX1aP": {
+      "type": "methylation-hero",
+      "blocks": {
+        "image_1_MhI001": {
+          "type": "image",
+          "settings": {
+            "alt": "Couple on the beach at sunset with the 10X Health methylation test kit in foreground",
+            "link": ""
+          }
+        },
+        "image_2_MhI002": {
+          "type": "image",
+          "settings": {
+            "alt": "Phone showing 1:1 Wellness Advisor call with the methylation kit and $100 store credit",
+            "link": ""
+          }
+        },
+        "image_3_MhI003": {
+          "type": "image",
+          "settings": {
+            "alt": "Hands holding the methylation kit showing what's included in your report",
+            "link": ""
+          }
+        },
+        "image_4_MhI004": {
+          "type": "image",
+          "settings": {
+            "alt": "Unlock your genetic roadmap — phone with genetic results dashboard",
+            "link": ""
+          }
+        },
+        "image_5_MhI005": {
+          "type": "image",
+          "settings": {
+            "alt": "10X Health System methylation genetic test kit box, top-down view",
+            "link": ""
+          }
+        },
+        "eyebrow_MhE001": {
+          "type": "eyebrow",
+          "settings": {
+            "text": "SUMMER METHYLATION SPECIAL"
+          }
+        },
+        "headline_serif_MhH001": {
+          "type": "headline_serif",
+          "settings": {
+            "text": "DECODE YOUR METHYLATION"
+          }
+        },
+        "headline_script_MhH002": {
+          "type": "headline_script",
+          "settings": {
+            "text": "Design Your Summer"
+          }
+        },
+        "tagline_MhT001": {
+          "type": "tagline",
+          "settings": {
+            "text": "<p><strong>Test your methylation. Talk to a Wellness Advisor. Take action.</strong></p>"
+          }
+        },
+        "body_MhB001": {
+          "type": "body",
+          "settings": {
+            "text": "<p>10X Health supports you in moving beyond surface-level wellness with a science-backed approach that helps you put understanding into action…</p><p>and now, into a real conversation.</p>"
+          }
+        },
+        "value_card_MhV001": {
+          "type": "value_card",
+          "settings": {
+            "label": "METHYLATION GENETIC TEST",
+            "value": "$599 VALUE",
+            "accent": "#152f4f"
+          }
+        },
+        "value_card_MhV002": {
+          "type": "value_card",
+          "settings": {
+            "label": "1:1 WELLNESS ADVISOR CALL",
+            "value": "$47 VALUE",
+            "accent": "#c99b65"
+          }
+        },
+        "value_card_MhV003": {
+          "type": "value_card",
+          "settings": {
+            "label": "$100 FIRST PROTOCOL CREDIT",
+            "value": "$100 VALUE",
+            "accent": "#d2242a"
+          }
+        },
+        "price_MhP001": {
+          "type": "price",
+          "settings": {
+            "compare_at": "$746.00",
+            "final": "$599.00",
+            "save_label": "Save $147"
+          }
+        },
+        "cta_MhC001": {
+          "type": "cta",
+          "settings": {
+            "label": "CLAIM MY BUNDLE",
+            "link": "#"
+          }
+        },
+        "authority_headline_MhA001": {
+          "type": "authority_headline",
+          "settings": {
+            "text": "Doing everything right and still exhausted?"
+          }
+        },
+        "authority_body_MhA002": {
+          "type": "authority_body",
+          "settings": {
+            "text": "<p>Your DNA holds the blueprint for how your body makes energy, handles stress, and recovers. This summer, turn that information into action.</p>"
+          }
+        },
+        "authority_feature_MhF001": {
+          "type": "authority_feature",
+          "settings": {
+            "line_1": "Easy",
+            "line_2": "At-Home Collection"
+          }
+        },
+        "authority_feature_MhF002": {
+          "type": "authority_feature",
+          "settings": {
+            "line_1": "CLIA-",
+            "line_2": "Certified Lab Partner"
+          }
+        },
+        "authority_feature_MhF003": {
+          "type": "authority_feature",
+          "settings": {
+            "line_1": "Backed By",
+            "line_2": "10X Medical Experts"
+          }
+        },
+        "authority_feature_MhF004": {
+          "type": "authority_feature",
+          "settings": {
+            "line_1": "100% Private",
+            "line_2": "Data"
+          }
+        },
+        "authority_feature_MhF005": {
+          "type": "authority_feature",
+          "settings": {
+            "line_1": "HIPAA-",
+            "line_2": "Compliant"
+          }
+        },
+        "authority_cta_MhA003": {
+          "type": "authority_cta",
+          "settings": {
+            "label": "DECODE MY METHYLATION",
+            "link": "#"
+          }
+        }
+      },
+      "block_order": [
+        "image_1_MhI001",
+        "image_2_MhI002",
+        "image_3_MhI003",
+        "image_4_MhI004",
+        "image_5_MhI005",
+        "eyebrow_MhE001",
+        "headline_serif_MhH001",
+        "headline_script_MhH002",
+        "tagline_MhT001",
+        "body_MhB001",
+        "value_card_MhV001",
+        "value_card_MhV002",
+        "value_card_MhV003",
+        "price_MhP001",
+        "cta_MhC001",
+        "authority_headline_MhA001",
+        "authority_body_MhA002",
+        "authority_feature_MhF001",
+        "authority_feature_MhF002",
+        "authority_feature_MhF003",
+        "authority_feature_MhF004",
+        "authority_feature_MhF005",
+        "authority_cta_MhA003"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "container_padding_top": 48,
+        "container_padding_bottom": 48,
+        "container_padding_top_mobile": 24,
+        "container_padding_bottom_mobile": 24,
+        "desktop_layout": "2-col",
+        "mobile_image_loop": true,
+        "mobile_image_autoplay": false,
+        "mobile_image_autoplay_delay": 4000
+      }
+    },
     "hero_jVaWmY": {
       "type": "hero",
       "blocks": {
@@ -284,6 +483,7 @@
     }
   },
   "order": [
+    "methylation_hero_MhX1aP",
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]
