@@ -12,9 +12,10 @@
     "methylation_hero_MhX1aP": {
       "type": "methylation-hero",
       "blocks": {
-        "image_stack": {
-          "type": "_methylation-image-stack",
+        "col_left": {
+          "type": "methylation-hero-column",
           "settings": {
+            "mobile_layout": "swiper",
             "mobile_image_loop": true,
             "mobile_image_autoplay": false,
             "mobile_image_autoplay_delay": 4000
@@ -69,9 +70,11 @@
             "img_5"
           ]
         },
-        "product_copy": {
-          "type": "_methylation-product-copy",
-          "settings": {},
+        "col_right": {
+          "type": "methylation-hero-column",
+          "settings": {
+            "mobile_layout": "stacked"
+          },
           "blocks": {
             "eyebrow": {
               "type": "_methylation-eyebrow",
@@ -144,25 +147,7 @@
                 "label": "CLAIM MY BUNDLE",
                 "link": "#"
               }
-            }
-          },
-          "block_order": [
-            "eyebrow",
-            "headline_serif",
-            "headline_script",
-            "tagline",
-            "body",
-            "vc_1",
-            "vc_2",
-            "vc_3",
-            "price",
-            "cta"
-          ]
-        },
-        "authority": {
-          "type": "_methylation-authority-box",
-          "settings": {},
-          "blocks": {
+            },
             "ahead": {
               "type": "_methylation-authority-headline",
               "settings": {
@@ -219,6 +204,16 @@
             }
           },
           "block_order": [
+            "eyebrow",
+            "headline_serif",
+            "headline_script",
+            "tagline",
+            "body",
+            "vc_1",
+            "vc_2",
+            "vc_3",
+            "price",
+            "cta",
             "ahead",
             "abody",
             "f_1",
@@ -230,11 +225,6 @@
           ]
         }
       },
-      "block_order": [
-        "image_stack",
-        "product_copy",
-        "authority"
-      ],
       "settings": {
         "color_scheme": "scheme-1",
         "container_padding_top": 48,
