@@ -12,13 +12,13 @@
   <div class="methylation-hero__images--grid">
     {%- if image_count > 0 -%}
       {%- assign hero_child = image_blocks | first -%}
-      {% render hero_child, role: 'hero' %}
+      {% render hero_child, section: section, role: 'hero' %}
     {%- endif -%}
 
     {%- if image_count > 1 -%}
       <div class="methylation-hero__image-grid-layout">
         {%- for child in image_blocks offset: 1 -%}
-          {% render child, role: 'thumb', index: forloop.index0 %}
+          {% render child, section: section, role: 'thumb', index: forloop.index0 %}
         {%- endfor -%}
       </div>
     {%- endif -%}
