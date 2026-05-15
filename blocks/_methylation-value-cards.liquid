@@ -1,0 +1,24 @@
+{%- liquid
+  assign card_count = block.blocks.size
+-%}
+
+<div class="methylation-hero__value-box" {{ block.shopify_attributes }}>
+  <div class="methylation-hero__value-cards" data-card-count="{{ card_count }}">
+    {%- for child in block.blocks -%}
+      {% render child, section: section %}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Value cards",
+  "settings": [],
+  "blocks": [
+    { "type": "_methylation-value-card" }
+  ],
+  "presets": [
+    { "name": "Value cards" }
+  ]
+}
+{% endschema %}
