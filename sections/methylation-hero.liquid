@@ -122,16 +122,22 @@
             "vc_3":            { "type": "_methylation-value-card" },
             "price":           { "type": "_methylation-price" },
             "cta":             { "type": "_methylation-cta" },
-            "ahead":           { "type": "_methylation-authority-headline" },
-            "abody":           { "type": "_methylation-authority-body" },
-            "f_1":             { "type": "_methylation-authority-feature" },
-            "f_2":             { "type": "_methylation-authority-feature" },
-            "f_3":             { "type": "_methylation-authority-feature" },
-            "f_4":             { "type": "_methylation-authority-feature" },
-            "f_5":             { "type": "_methylation-authority-feature" },
-            "acta":            { "type": "_methylation-authority-cta" }
+            "authority_box": {
+              "type": "_methylation-authority-box",
+              "blocks": {
+                "ahead": { "type": "_methylation-authority-headline" },
+                "abody": { "type": "_methylation-authority-body" },
+                "f_1":   { "type": "_methylation-authority-feature" },
+                "f_2":   { "type": "_methylation-authority-feature" },
+                "f_3":   { "type": "_methylation-authority-feature" },
+                "f_4":   { "type": "_methylation-authority-feature" },
+                "f_5":   { "type": "_methylation-authority-feature" },
+                "acta":  { "type": "_methylation-authority-cta" }
+              },
+              "block_order": ["ahead","abody","f_1","f_2","f_3","f_4","f_5","acta"]
+            }
           },
-          "block_order": ["eyebrow","headline_serif","headline_script","tagline","body","vc_1","vc_2","vc_3","price","cta","ahead","abody","f_1","f_2","f_3","f_4","f_5","acta"]
+          "block_order": ["eyebrow","headline_serif","headline_script","tagline","body","vc_1","vc_2","vc_3","price","cta","authority_box"]
         }
       },
       "block_order": ["col_left", "col_right"]
