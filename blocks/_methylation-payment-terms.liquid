@@ -1,0 +1,40 @@
+{%- liquid
+  assign product = block.settings.product
+  assign variant = null
+  if product != blank
+    assign variant = product.selected_or_first_available_variant
+  endif
+-%}
+
+<div class="methylation-hero__payment-terms" {{ block.shopify_attributes }}>
+  {%- if variant -%}
+    {%- form 'product', product, id: 'methylation-hero-payment-terms-form', class: 'methylation-hero__payment-terms-form' -%}
+      <input type="hidden" name="id" value="{{ variant.id }}">
+      <shopify-payment-terms
+        variant-id="{{ variant.id }}"
+        id="methylation-hero-payment-terms-{{ block.id }}"
+      ></shopify-payment-terms>
+    {%- endform -%}
+  {%- else -%}
+    <p class="methylation-hero__payment-terms-placeholder">
+      4 interest-free installments, or from <strong>$54.06</strong>/mo with
+      <span class="methylation-hero__payment-terms-brand">Shop Pay</span>
+      <br>
+      <a href="#" class="methylation-hero__payment-terms-link">Check your purchasing power</a>
+    </p>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Payment terms",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "info": "Select the product whose variant drives the Shop Pay installments quote. Leave empty to show a static placeholder."
+    }
+  ]
+}
+{% endschema %}
