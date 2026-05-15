@@ -1,0 +1,753 @@
+@use './methylation-hero-tokens';
+
+// ---------------------------------------------------------------------------
+// Methylation Hero Section
+// All colors, sizes, and spacing consumed via CSS custom properties only.
+// Zero raw hex or pixel values allowed in this file.
+// ---------------------------------------------------------------------------
+
+.methylation-hero {
+  background-color: var(--mh-color-surface);
+  padding-top: var(--padding-top);
+  padding-bottom: var(--padding-bottom);
+}
+
+.methylation-hero__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--mh-space-section);
+  max-width: 90rem;
+  margin-inline: auto;
+  padding-inline: var(--mh-space-section);
+
+  @media (min-width: 1024px) {
+    grid-template-columns: 700px minmax(0, 1fr);
+    gap: var(--mh-space-col-gap);
+    align-items: start;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Generic column wrapper — orderable container of leaf blocks
+// ---------------------------------------------------------------------------
+
+.methylation-hero__column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mh-space-stack-md);
+  min-width: 0;
+}
+
+// Stacked-on-desktop / swiper-on-mobile column (used by image column)
+.methylation-hero__column--swiper-mobile {
+  .methylation-hero__column-stack {
+    display: none;
+
+    @media (min-width: 1024px) {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--mh-space-stack-md);
+
+      // First child = hero (full width). Remaining = 2-col thumb grid.
+      > :first-child {
+        grid-column: 1 / -1;
+      }
+    }
+  }
+
+  // Place thumbs (every child except first) into 2-col grid on desktop
+  @media (min-width: 1024px) {
+    .methylation-hero__column-stack {
+      grid-template-columns: 1fr 1fr;
+
+      > :first-child {
+        grid-column: 1 / -1;
+      }
+    }
+  }
+
+  .methylation-hero__column-swiper {
+    display: block;
+    position: relative;
+
+    @media (min-width: 1024px) {
+      display: none;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Mobile image carousel — native scroll-snap (no JS)
+// ---------------------------------------------------------------------------
+
+.methylation-hero__scroller {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.5rem;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.methylation-hero__slide {
+  flex: 0 0 90%;
+  scroll-snap-align: start;
+  min-width: 0;
+
+  .methylation-hero__image-wrap {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    border-radius: var(--mh-radius-md);
+    overflow: hidden;
+  }
+
+  img,
+  .methylation-hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Left column — image stack
+// ---------------------------------------------------------------------------
+
+.methylation-hero__images {
+  min-width: 0;
+}
+
+// Grid variant — desktop only
+.methylation-hero__images--grid {
+  display: none;
+
+  @media (min-width: 1024px) {
+    display: grid;
+    gap: var(--mh-space-stack-md);
+  }
+}
+
+.methylation-hero__image-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--mh-space-stack-md);
+}
+
+// Swiper variant — mobile only
+.methylation-hero__images--swiper {
+  display: block;
+  position: relative;
+
+  @media (min-width: 1024px) {
+    display: none;
+  }
+}
+
+// Individual image wrappers
+.methylation-hero__image-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--mh-radius-md);
+  background-color: var(--mh-color-muted);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.methylation-hero__image-wrap--hero {
+  aspect-ratio: 4 / 3;
+
+  @media (min-width: 1024px) {
+    // Figma: 700×700 square hero. Stack height matches right column.
+    aspect-ratio: 1 / 1;
+  }
+}
+
+.methylation-hero__image-wrap--thumb {
+  aspect-ratio: 1 / 1;
+}
+
+// ---------------------------------------------------------------------------
+// Empty-state placeholders (rendered when block.settings.image is blank)
+// ---------------------------------------------------------------------------
+
+.methylation-hero__image-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--mh-space-stack-sm);
+  background: linear-gradient(
+    135deg,
+    var(--mh-color-navy-overlay-12) 0%,
+    var(--mh-color-navy-overlay-20) 100%
+  );
+  color: var(--mh-color-on-navy);
+  text-align: center;
+  padding: var(--mh-space-stack-md);
+
+  svg {
+    width: 35%;
+    height: auto;
+    max-width: 8rem;
+    opacity: 0.55;
+    fill: var(--mh-color-on-navy);
+  }
+}
+
+.methylation-hero__image-placeholder-label {
+  font-family: var(--mh-font-accent);
+  font-size: var(--mh-fs-value-label);
+  font-weight: 600;
+  letter-spacing: var(--mh-ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--mh-color-on-navy);
+  opacity: 0.85;
+}
+
+.methylation-hero__image-wrap--swiper {
+  aspect-ratio: 4 / 3;
+}
+
+// Swiper pagination wrapper
+.methylation-hero__swiper-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--mh-space-stack-md);
+}
+
+// ---------------------------------------------------------------------------
+// Right column
+// ---------------------------------------------------------------------------
+
+.methylation-hero__right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mh-space-stack-lg);
+  min-width: 0;
+}
+
+// ---------------------------------------------------------------------------
+// Product copy column
+// ---------------------------------------------------------------------------
+
+.methylation-hero__copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mh-space-stack-lg);
+}
+
+// Logical sub-wrappers — easy DOM inspection / per-group spacing
+.methylation-hero__header-group,
+.methylation-hero__description-group,
+.methylation-hero__purchase-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mh-space-stack-md);
+  min-width: 0;
+}
+
+.methylation-hero__value-box {
+  display: flex;
+  width: 100%;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.625rem;
+  background-color: var(--mh-color-surface-translucent);
+  box-shadow: 0 0 1.25rem var(--mh-color-navy-overlay-20);
+  overflow: hidden;
+}
+
+.methylation-hero__purchase-group {
+  gap: var(--mh-space-stack-md);
+}
+
+// Details wrapper — matches Figma "Main Details" (12071:3792)
+.methylation-hero__details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.9375rem; // 15px — Figma 12071:3793 parent gap
+  padding-bottom: 1rem;
+  min-width: 0;
+
+  // Tight header cluster — eyebrow + serif + script + tagline at 15px gap
+  > .methylation-hero__eyebrow,
+  > .methylation-hero__headline-serif,
+  > .methylation-hero__headline-script,
+  > .methylation-hero__tagline {
+    width: 100%;
+  }
+
+}
+
+// Figma 12071:3793 — script ascenders intentionally overlap serif descenders.
+// Targets the Shopify block wrapper since the flex item is `<div class="shopify-block">`.
+.methylation-hero__details .shopify-block:has(> .methylation-hero__headline-script) {
+  font-size: var(--mh-fs-headline-script);
+  margin-top: -0.2em;
+}
+
+.methylation-hero__eyebrow {
+  font-family: var(--mh-font-body);
+  font-size: var(--mh-fs-eyebrow);
+  font-weight: 600;
+  line-height: var(--mh-lh-eyebrow);
+  letter-spacing: var(--mh-ls-eyebrow);
+  color: var(--mh-color-red);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.methylation-hero__headline-serif {
+  font-family: var(--mh-font-display);
+  font-size: var(--mh-fs-headline-serif);
+  font-weight: 600;
+  line-height: var(--mh-lh-tight);
+  letter-spacing: var(--mh-ls-tight);
+  color: var(--mh-color-navy);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.methylation-hero__headline-script {
+  font-family: var(--mh-font-script);
+  font-size: var(--mh-fs-headline-script);
+  font-weight: 400;
+  line-height: var(--mh-lh-tight);
+  color: var(--mh-color-gold);
+  margin: 0;
+}
+
+.methylation-hero__tagline {
+  font-family: var(--mh-font-accent);
+  font-size: var(--mh-fs-tagline);
+  font-weight: 700;
+  line-height: var(--mh-lh-snug);
+  color: var(--mh-color-navy);
+  margin: 0;
+  padding-block: 0.75rem;
+
+  p, strong {
+    font-weight: 700;
+    margin: 0;
+
+    & + p {
+      margin-top: var(--mh-space-stack-sm);
+    }
+  }
+}
+
+.methylation-hero__body {
+  font-family: var(--mh-font-accent);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.43;
+  color: #000;
+  margin: 0;
+
+  p {
+    margin: 0;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Value cards row
+// ---------------------------------------------------------------------------
+
+.methylation-hero__value-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.9375rem;
+  width: 100%;
+}
+
+.methylation-hero__value-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3125rem;
+  padding: 0.625rem;
+  min-width: 0;
+  text-align: center;
+}
+
+.methylation-hero__value-card-icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.125rem;
+  height: 2.125rem;
+  flex-shrink: 0;
+}
+
+.methylation-hero__value-card-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.methylation-hero__value-card-label {
+  font-family: var(--mh-font-body);
+  font-size: var(--mh-fs-value-label);
+  font-weight: 500;
+  line-height: 1.125rem;
+  color: var(--mh-card-accent, var(--mh-color-navy));
+  text-transform: uppercase;
+  margin: 0;
+  word-break: break-word;
+}
+
+.methylation-hero__value-card-value {
+  font-family: var(--mh-font-body);
+  font-size: var(--mh-fs-value-value);
+  font-weight: 500;
+  line-height: 1.125rem;
+  color: #000;
+  margin: 0;
+  word-break: break-word;
+}
+
+// ---------------------------------------------------------------------------
+// Price
+// ---------------------------------------------------------------------------
+
+.methylation-hero__price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.methylation-hero__price-compare {
+  font-family: var(--mh-font-accent);
+  font-size: var(--mh-fs-price-compare);
+  font-weight: 700;
+  line-height: 2rem;
+  color: var(--mh-color-red-muted);
+  text-decoration: line-through;
+  margin: 0;
+}
+
+.methylation-hero__price-final {
+  font-family: var(--mh-font-accent);
+  font-size: var(--mh-fs-price-final);
+  font-weight: 700;
+  line-height: 2rem;
+  color: #000;
+  margin: 0;
+}
+
+.methylation-hero__price-save {
+  font-family: var(--mh-font-accent);
+  font-size: var(--mh-fs-value-label);
+  font-weight: 600;
+  color: var(--mh-color-on-navy);
+  background-color: var(--mh-color-red);
+  border-radius: var(--mh-radius-pill);
+  padding: 0.25em 0.75em;
+}
+
+// ---------------------------------------------------------------------------
+// CTA button
+// ---------------------------------------------------------------------------
+
+.methylation-hero__cta-icon {
+  flex-shrink: 0;
+  width: 1.375rem;
+  height: 1.25rem;
+}
+
+.methylation-hero__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  width: 100%;
+  min-height: 3.75rem;
+  margin-top: 0.5rem;
+  font-family: var(--mh-font-accent);
+  font-size: var(--mh-fs-cta);
+  font-weight: 700;
+  line-height: 1.75rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--mh-color-on-navy);
+  background-color: var(--mh-color-red);
+  border-radius: 0.5rem;
+  padding: 1rem 0.75rem;
+  text-decoration: none;
+  box-shadow: 0 1rem 0.625rem rgba(0, 0, 0, 0.08);
+  transition: filter 0.15s ease;
+
+  &:hover {
+    filter: brightness(0.92);
+  }
+
+  &:focus-visible {
+    outline: 0.1875rem solid var(--mh-color-red);
+    outline-offset: 0.1875rem;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Payment terms (Shop Pay installments) — Figma 12071:3836
+// ---------------------------------------------------------------------------
+
+.methylation-hero__payment-terms {
+  width: 100%;
+  font-family: var(--mh-font-body);
+  font-size: 0.9375rem; // 15px
+  line-height: 1.5rem; // 24px
+  color: #28282a;
+  margin-top: 0.5rem;
+
+  shopify-payment-terms {
+    display: block;
+  }
+
+  // Shopify's component injects its own markup — style its descendants neutrally
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
+}
+
+.methylation-hero__payment-terms-form {
+  margin: 0;
+}
+
+.methylation-hero__payment-terms-placeholder {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+  strong {
+    font-weight: 700;
+  }
+}
+
+.methylation-hero__payment-terms-brand {
+  display: inline-block;
+  background-color: #5a31f4;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  line-height: 1;
+  padding: 0.1875rem 0.375rem;
+  border-radius: 0.25rem;
+  vertical-align: middle;
+  margin-left: 0.125rem;
+}
+
+.methylation-hero__payment-terms-link {
+  font-size: 0.925rem;
+  color: #28282a;
+  text-decoration: underline;
+}
+
+// ---------------------------------------------------------------------------
+// Authority box
+// ---------------------------------------------------------------------------
+
+.methylation-hero__authority {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  width: 100%;
+  max-width: 38.75rem; // 620px
+  background-color: var(--mh-color-navy);
+  color: var(--mh-color-on-navy);
+  border-radius: 0.75rem;
+  padding: 2.5rem 1.5625rem 1.5625rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.9375rem;
+  box-shadow: 0 0 1.25rem var(--mh-color-navy-overlay-20);
+
+  @media (min-width: 1024px) {
+    min-height: 39.125rem; // 626px
+  }
+}
+
+.methylation-hero__authority-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      160deg,
+      #2a4a73 0%,
+      #1a3a5e 45%,
+      #d4a574 100%
+    );
+}
+
+.methylation-hero__authority-bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.methylation-hero__authority-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    139.65deg,
+    rgba(21, 47, 79, 0.9) 32.21%,
+    rgba(21, 47, 79, 0.18) 100%
+  );
+}
+
+.methylation-hero__authority-header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.methylation-hero__authority-features-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.methylation-hero__authority-cta-group {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.methylation-hero__authority-headline {
+  font-family: var(--mh-font-body);
+  font-size: clamp(1.75rem, calc(2.0vw + 1.2rem), 2.625rem);
+  font-weight: 700;
+  line-height: 1.31;
+  color: var(--mh-color-on-navy);
+  margin: 0;
+}
+
+.methylation-hero__authority-body {
+  font-family: var(--mh-font-body);
+  font-size: clamp(1rem, calc(0.6vw + 0.835rem), 1.25rem);
+  font-weight: 500;
+  line-height: 1.7;
+  color: var(--mh-color-on-navy);
+  margin: 0;
+  text-shadow: 0 0 1.25rem var(--mh-color-navy);
+
+  p {
+    margin: 0;
+
+    & + p {
+      margin-top: var(--mh-space-stack-sm);
+    }
+  }
+}
+
+.methylation-hero__features {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.625rem;
+  width: 100%;
+  max-width: 32rem;
+}
+
+.methylation-hero__feature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.3125rem;
+  padding: 0.625rem;
+  min-width: 0;
+}
+
+.methylation-hero__feature-icon {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+  display: block;
+}
+
+.methylation-hero__feature-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+
+.methylation-hero__feature-line-1,
+.methylation-hero__feature-line-2 {
+  font-family: var(--mh-font-accent);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  color: var(--mh-color-on-navy);
+  word-break: break-word;
+}
+
+.methylation-hero__authority-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  width: 100%;
+  max-width: 23.75rem;
+  min-height: 3.75rem;
+  font-family: var(--mh-font-accent);
+  font-size: var(--mh-fs-cta);
+  font-weight: 700;
+  line-height: 1.75rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--mh-color-on-navy);
+  background-color: var(--mh-color-red);
+  border-radius: 0.5rem;
+  padding: 1rem 0.75rem;
+  text-decoration: none;
+  box-shadow: 0 1rem 0.625rem rgba(0, 0, 0, 0.08);
+  transition: filter 0.15s ease;
+
+  &:hover {
+    filter: brightness(0.95);
+  }
+
+  &:focus-visible {
+    outline: 0.1875rem solid var(--mh-color-on-navy);
+    outline-offset: 0.1875rem;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Reduced motion overrides
+// ---------------------------------------------------------------------------
+
+@media (prefers-reduced-motion: reduce) {
+  .methylation-hero__cta,
+  .methylation-hero__authority-cta {
+    transition: none;
+  }
+}
