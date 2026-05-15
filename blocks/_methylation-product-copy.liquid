@@ -11,9 +11,8 @@
 
   <div class="methylation-hero__header-group">
     {%- for child in block.blocks -%}
-      {%- if header_types contains child.type -%}
-        {% render child, section: section %}
-      {%- endif -%}
+      <span data-debug-type="{{ child.type }}" data-debug-id="{{ child.id }}"></span>
+      {% render child, section: section %}
     {%- endfor -%}
   </div>
 
