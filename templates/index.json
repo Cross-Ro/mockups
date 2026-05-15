@@ -76,84 +76,100 @@
             "mobile_layout": "stacked"
           },
           "blocks": {
-            "eyebrow": {
-              "type": "_methylation-eyebrow",
-              "settings": {
-                "text": "SUMMER METHYLATION SPECIAL"
-              }
-            },
-            "headline_serif": {
-              "type": "_methylation-headline-serif",
-              "settings": {
-                "text": "DECODE YOUR METHYLATION"
-              }
-            },
-            "headline_script": {
-              "type": "_methylation-headline-script",
-              "settings": {
-                "text": "Design Your Summer"
-              }
-            },
-            "tagline": {
-              "type": "_methylation-tagline",
-              "settings": {
-                "text": "<p><strong>Test your methylation. Talk to a Wellness Advisor. Take action.</strong></p>"
-              }
-            },
-            "body": {
-              "type": "_methylation-body",
-              "settings": {
-                "text": "<p>10X Health supports you in moving beyond surface-level wellness with a science-backed approach that helps you put understanding into action…</p><p>and now, into a real conversation.</p>"
-              }
-            },
-            "value_cards": {
-              "type": "_methylation-value-cards",
+            "details": {
+              "type": "_methylation-details",
               "settings": {},
               "blocks": {
-                "vc_1": {
-                  "type": "_methylation-value-card",
+                "eyebrow": {
+                  "type": "_methylation-eyebrow",
                   "settings": {
-                    "icon": "shopify://shop_images/DNA_Icon_99629d50-a9dd-4fea-ba7a-15054a58ef8e.png",
-                    "label": "METHYLATION GENETIC TEST",
-                    "value": "$599 VALUE",
-                    "accent": "#152f4f"
+                    "text": "SUMMER METHYLATION SPECIAL"
                   }
                 },
-                "vc_2": {
-                  "type": "_methylation-value-card",
+                "headline_serif": {
+                  "type": "_methylation-headline-serif",
                   "settings": {
-                    "icon": "shopify://shop_images/Advisor_Icon_b3472bba-c213-4a03-9893-0752df7b8c1f.png",
-                    "label": "1:1 WELLNESS ADVISOR CALL",
-                    "value": "$47 VALUE",
-                    "accent": "#c99b65"
+                    "text": "DECODE YOUR METHYLATION"
                   }
                 },
-                "vc_3": {
-                  "type": "_methylation-value-card",
+                "headline_script": {
+                  "type": "_methylation-headline-script",
                   "settings": {
-                    "icon": "shopify://shop_images/Gift_Icon_dbdcc4cc-ea7e-4872-bdac-a1613468ddf1.png",
-                    "label": "$100 FIRST PROTOCOL CREDIT",
-                    "value": "$100 VALUE",
-                    "accent": "#d2242a"
+                    "text": "Design Your Summer"
+                  }
+                },
+                "tagline": {
+                  "type": "_methylation-tagline",
+                  "settings": {
+                    "text": "<p><strong>Test your methylation. Talk to a Wellness Advisor. Take action.</strong></p>"
+                  }
+                },
+                "body": {
+                  "type": "_methylation-body",
+                  "settings": {
+                    "text": "<p>10X Health supports you in moving beyond surface-level wellness with a science-backed approach that helps you put understanding into action…</p><p>and now, into a real conversation.</p>"
+                  }
+                },
+                "value_cards": {
+                  "type": "_methylation-value-cards",
+                  "settings": {},
+                  "blocks": {
+                    "vc_1": {
+                      "type": "_methylation-value-card",
+                      "settings": {
+                        "icon": "shopify://shop_images/DNA_Icon_99629d50-a9dd-4fea-ba7a-15054a58ef8e.png",
+                        "label": "METHYLATION GENETIC TEST",
+                        "value": "$599 VALUE",
+                        "accent": "#152f4f"
+                      }
+                    },
+                    "vc_2": {
+                      "type": "_methylation-value-card",
+                      "settings": {
+                        "icon": "shopify://shop_images/Advisor_Icon_b3472bba-c213-4a03-9893-0752df7b8c1f.png",
+                        "label": "1:1 WELLNESS ADVISOR CALL",
+                        "value": "$47 VALUE",
+                        "accent": "#c99b65"
+                      }
+                    },
+                    "vc_3": {
+                      "type": "_methylation-value-card",
+                      "settings": {
+                        "icon": "shopify://shop_images/Gift_Icon_dbdcc4cc-ea7e-4872-bdac-a1613468ddf1.png",
+                        "label": "$100 FIRST PROTOCOL CREDIT",
+                        "value": "$100 VALUE",
+                        "accent": "#d2242a"
+                      }
+                    }
+                  },
+                  "block_order": ["vc_1","vc_2","vc_3"]
+                },
+                "price": {
+                  "type": "_methylation-price",
+                  "settings": {
+                    "compare_at": "$746.00",
+                    "final": "$599.00",
+                    "save_label": "Save $147"
+                  }
+                },
+                "cta": {
+                  "type": "_methylation-cta",
+                  "settings": {
+                    "label": "CLAIM MY BUNDLE",
+                    "link": "#"
                   }
                 }
               },
-              "block_order": ["vc_1","vc_2","vc_3"]
-            },
-            "price": {
-              "type": "_methylation-price",
-              "settings": {
-                "compare_at": "$746.00",
-                "final": "$599.00",
-                "save_label": "Save $147"
-              }
-            },
-            "cta": {
-              "type": "_methylation-cta",
-              "settings": {
-                "label": "CLAIM MY BUNDLE",
-                "link": "#"
-              }
+              "block_order": [
+                "eyebrow",
+                "headline_serif",
+                "headline_script",
+                "tagline",
+                "body",
+                "value_cards",
+                "price",
+                "cta"
+              ]
             },
             "authority_box": {
               "type": "_methylation-authority-box",
@@ -218,14 +234,7 @@
             }
           },
           "block_order": [
-            "eyebrow",
-            "headline_serif",
-            "headline_script",
-            "tagline",
-            "body",
-            "value_cards",
-            "price",
-            "cta",
+            "details",
             "authority_box"
           ]
         }
