@@ -51,50 +51,57 @@
           or authority_cta_block != blank -%}
         <div class="methylation-hero__authority">
 
-          {%- if authority_headline_block != blank -%}
-            {%- if authority_headline_block.settings.text != blank -%}
-              <h2
-                class="methylation-hero__authority-headline"
-                {{ authority_headline_block.shopify_attributes }}
-              >
-                {{ authority_headline_block.settings.text | escape }}
-              </h2>
-            {%- endif -%}
-          {%- endif -%}
+          {%- comment -%}—— AUTHORITY · header group (headline + body) ——{%- endcomment -%}
+          {%- if authority_headline_block != blank or authority_body_block != blank -%}
+            <div class="methylation-hero__authority-header">
+              {%- if authority_headline_block != blank and authority_headline_block.settings.text != blank -%}
+                <h2
+                  class="methylation-hero__authority-headline"
+                  {{ authority_headline_block.shopify_attributes }}
+                >
+                  {{ authority_headline_block.settings.text | escape }}
+                </h2>
+              {%- endif -%}
 
-          {%- if authority_body_block != blank -%}
-            {%- if authority_body_block.settings.text != blank -%}
-              <div
-                class="methylation-hero__authority-body"
-                {{ authority_body_block.shopify_attributes }}
-              >
-                {{ authority_body_block.settings.text }}
-              </div>
-            {%- endif -%}
-          {%- endif -%}
-
-          {%- if authority_features.size > 0 -%}
-            <div class="methylation-hero__features">
-              {%- for block in authority_features -%}
-                {% render 'methylation-hero-feature', block: block %}
-              {%- endfor -%}
+              {%- if authority_body_block != blank and authority_body_block.settings.text != blank -%}
+                <div
+                  class="methylation-hero__authority-body"
+                  {{ authority_body_block.shopify_attributes }}
+                >
+                  {{ authority_body_block.settings.text }}
+                </div>
+              {%- endif -%}
             </div>
           {%- endif -%}
 
+          {%- comment -%}—— AUTHORITY · features group ——{%- endcomment -%}
+          {%- if authority_features.size > 0 -%}
+            <div class="methylation-hero__authority-features-group">
+              <div class="methylation-hero__features" data-feature-count="{{ authority_features.size }}">
+                {%- for block in authority_features -%}
+                  {% render 'methylation-hero-feature', block: block %}
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- comment -%}—— AUTHORITY · CTA group ——{%- endcomment -%}
           {%- if authority_cta_block != blank -%}
             {%- liquid
               assign auth_label = authority_cta_block.settings.label | default: 'Decode My Methylation'
               assign auth_link  = authority_cta_block.settings.link  | default: '#'
             -%}
             {%- if auth_label != blank -%}
-              <a
-                href="{{ auth_link }}"
-                class="methylation-hero__authority-cta"
-                data-cta="methylation-hero-authority"
-                {{ authority_cta_block.shopify_attributes }}
-              >
-                {{ auth_label | escape }}
-              </a>
+              <div class="methylation-hero__authority-cta-group">
+                <a
+                  href="{{ auth_link }}"
+                  class="methylation-hero__authority-cta"
+                  data-cta="methylation-hero-authority"
+                  {{ authority_cta_block.shopify_attributes }}
+                >
+                  {{ auth_label | escape }}
+                </a>
+              </div>
             {%- endif -%}
           {%- endif -%}
 
