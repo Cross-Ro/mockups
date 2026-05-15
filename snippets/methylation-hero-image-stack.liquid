@@ -41,6 +41,11 @@
               widths: '400, 700, 900, 1400',
               sizes: '(min-width: 1024px) 700px, 100vw'
           }}
+        {%- else -%}
+          <div class="methylation-hero__image-placeholder">
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'methylation-hero__image methylation-hero__image--placeholder' }}
+            <span class="methylation-hero__image-placeholder-label">Hero image · 700×700</span>
+          </div>
         {%- endif -%}
       </div>
     {%- endif -%}
