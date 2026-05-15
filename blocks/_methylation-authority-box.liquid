@@ -7,7 +7,26 @@
   endfor
 -%}
 
+{%- liquid
+  assign bg_image = block.settings.bg_image
+-%}
+
 <div class="methylation-hero__authority" {{ block.shopify_attributes }}>
+
+  <div class="methylation-hero__authority-bg" aria-hidden="true">
+    {%- if bg_image != blank -%}
+      {{
+        bg_image
+        | image_url: width: 1200
+        | image_tag:
+          loading: 'lazy',
+          alt: '',
+          class: 'methylation-hero__authority-bg-image',
+          widths: '600, 900, 1200, 1600'
+      }}
+    {%- endif -%}
+    <div class="methylation-hero__authority-bg-overlay"></div>
+  </div>
 
   <div class="methylation-hero__authority-header">
     {%- for child in block.blocks -%}
@@ -41,7 +60,13 @@
 {% schema %}
 {
   "name": "Authority box",
-  "settings": [],
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    }
+  ],
   "blocks": [
     { "type": "_methylation-authority-headline" },
     { "type": "_methylation-authority-body" },
