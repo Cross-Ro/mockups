@@ -16,21 +16,19 @@
   {% if card_accent != blank %}style="--mh-card-accent: {{ card_accent }};"{% endif %}
   {{ block.shopify_attributes }}
 >
-  {%- if card_icon != blank -%}
-    {{
-      card_icon
-      | image_url: width: 64
-      | image_tag:
-        loading: 'lazy',
-        alt: '',
-        class: 'methylation-hero__value-card-icon',
-        widths: '32, 64'
-    }}
-  {%- endif -%}
-
-  {%- if card_accent != blank -%}
-    <div class="methylation-hero__value-card-accent-bar" aria-hidden="true"></div>
-  {%- endif -%}
+  <div class="methylation-hero__value-card-icon-box" aria-hidden="true">
+    {%- if card_icon != blank -%}
+      {{
+        card_icon
+        | image_url: width: 64
+        | image_tag:
+          loading: 'lazy',
+          alt: '',
+          class: 'methylation-hero__value-card-icon',
+          widths: '32, 64'
+      }}
+    {%- endif -%}
+  </div>
 
   {%- if card_label != blank -%}
     <p class="methylation-hero__value-card-label">{{ card_label | escape }}</p>
