@@ -12,14 +12,14 @@
   <div class="methylation-hero__header-group">
     {%- for child in block.blocks -%}
       {%- if header_types contains child.type -%}
-        {% render child %}
+        {% render child, section: section %}
       {%- endif -%}
     {%- endfor -%}
   </div>
 
   {%- if body_block -%}
     <div class="methylation-hero__description-group">
-      {% render body_block %}
+      {% render body_block, section: section %}
     </div>
   {%- endif -%}
 
@@ -27,7 +27,7 @@
     <div class="methylation-hero__value-box">
       <div class="methylation-hero__value-cards" data-card-count="{{ value_card_count }}">
         {%- for vc in value_cards -%}
-          {% render vc %}
+          {% render vc, section: section %}
         {%- endfor -%}
       </div>
     </div>
@@ -35,8 +35,8 @@
 
   {%- if price_block or cta_block -%}
     <div class="methylation-hero__purchase-group">
-      {%- if price_block -%}{% render price_block %}{%- endif -%}
-      {%- if cta_block   -%}{% render cta_block   %}{%- endif -%}
+      {%- if price_block -%}{% render price_block, section: section %}{%- endif -%}
+      {%- if cta_block   -%}{% render cta_block,   section: section %}{%- endif -%}
     </div>
   {%- endif -%}
 
