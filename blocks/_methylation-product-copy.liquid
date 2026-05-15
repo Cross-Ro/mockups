@@ -12,7 +12,7 @@
   <div class="methylation-hero__header-group">
     {%- for child in block.blocks -%}
       {%- if header_types contains child.type -%}
-        {% render child, section_id: section.id %}
+        {% render child %}
       {%- endif -%}
     {%- endfor -%}
   </div>
