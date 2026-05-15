@@ -1,35 +1,41 @@
 {%- liquid
-  assign features      = block.blocks | where: 'type', '_methylation-authority-feature'
-  assign feature_count = features | size
-  assign headline_blk  = block.blocks | where: 'type', '_methylation-authority-headline' | first
-  assign body_blk      = block.blocks | where: 'type', '_methylation-authority-body'     | first
-  assign cta_blk       = block.blocks | where: 'type', '_methylation-authority-cta'      | first
+  assign feature_count = 0
+  for child in block.blocks
+    if child.id contains '_f_'
+      assign feature_count = feature_count | plus: 1
+    endif
+  endfor
 -%}
 
 <div class="methylation-hero__authority" {{ block.shopify_attributes }}>
 
-  {%- if headline_blk or body_blk -%}
-    <div class="methylation-hero__authority-header">
-      {%- if headline_blk -%}{% render headline_blk, section: section %}{%- endif -%}
-      {%- if body_blk     -%}{% render body_blk,     section: section %}{%- endif -%}
-    </div>
-  {%- endif -%}
+  <div class="methylation-hero__authority-header">
+    {%- for child in block.blocks -%}
+      {%- if child.id contains '_ahead' or child.id contains '_abody' -%}
+        {% render child, section: section %}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
 
   {%- if feature_count > 0 -%}
     <div class="methylation-hero__authority-features-group">
       <div class="methylation-hero__features" data-feature-count="{{ feature_count }}">
-        {%- for feat in features -%}
-          {% render feat, section: section %}
+        {%- for child in block.blocks -%}
+          {%- if child.id contains '_f_' -%}
+            {% render child, section: section %}
+          {%- endif -%}
         {%- endfor -%}
       </div>
     </div>
   {%- endif -%}
 
-  {%- if cta_blk -%}
-    <div class="methylation-hero__authority-cta-group">
-      {% render cta_blk, section: section %}
-    </div>
-  {%- endif -%}
+  <div class="methylation-hero__authority-cta-group">
+    {%- for child in block.blocks -%}
+      {%- if child.id contains '_acta' -%}
+        {% render child, section: section %}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
 </div>
 
 {% schema %}
