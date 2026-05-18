@@ -13,7 +13,6 @@
   assign p5 = block.settings.product_5
   assign cta_label = block.settings.label | default: 'Claim My Bundle'
   assign bundle_id = block.settings.bundle_id | default: 'hero-bundle'
-  assign bundle_percentage = block.settings.bundle_percentage | default: 20
 
   assign all_picked = true
   if p1 == blank or p2 == blank or p3 == blank or p4 == blank or p5 == blank
@@ -28,13 +27,9 @@
 -%}
 
 {%- if all_picked -%}
-  {%- capture bundle_config -%}
-    {"bundleId":"{{ bundle_id }}","productIds":["gid://shopify/Product/{{ p1.id }}","gid://shopify/Product/{{ p2.id }}","gid://shopify/Product/{{ p3.id }}","gid://shopify/Product/{{ p4.id }}","gid://shopify/Product/{{ p5.id }}"],"percentage":{{ bundle_percentage }}}
-  {%- endcapture -%}
   <bundle-cta-component
     data-bundle-id="{{ bundle_id }}"
     data-variants="[{{ v1 }},{{ v2 }},{{ v3 }},{{ v4 }},{{ v5 }}]"
-    data-bundle-config="{{ bundle_config | escape }}"
     {{ block.shopify_attributes }}
   >
     <button
