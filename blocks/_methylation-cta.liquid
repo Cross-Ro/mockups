@@ -1,18 +1,60 @@
+{%- doc -%}
+  Methylation hero Primary CTA. Bundle behavior: adds 5 selected products to the cart in one
+  request. The 20% discount is applied server-side by the bundle-discount Shopify Function as
+  long as all 5 product IDs remain in the cart. Removing any of them drops the discount on the
+  next cart recompute.
+{%- enddoc -%}
+
 {%- liquid
+  assign p1 = block.settings.product_1
+  assign p2 = block.settings.product_2
+  assign p3 = block.settings.product_3
+  assign p4 = block.settings.product_4
+  assign p5 = block.settings.product_5
   assign cta_label = block.settings.label | default: 'Claim My Bundle'
-  assign cta_link  = block.settings.link  | default: '#'
+  assign bundle_id = block.settings.bundle_id | default: 'hero-bundle'
+
+  assign all_picked = true
+  if p1 == blank or p2 == blank or p3 == blank or p4 == blank or p5 == blank
+    assign all_picked = false
+  endif
+
+  assign v1 = p1.selected_or_first_available_variant.id
+  assign v2 = p2.selected_or_first_available_variant.id
+  assign v3 = p3.selected_or_first_available_variant.id
+  assign v4 = p4.selected_or_first_available_variant.id
+  assign v5 = p5.selected_or_first_available_variant.id
 -%}
 
-{%- if cta_label != blank -%}
-  <a
-    href="{{ cta_link }}"
-    class="methylation-hero__cta"
-    data-cta="methylation-hero"
+{%- if all_picked -%}
+  <bundle-cta-component
+    data-bundle-id="{{ bundle_id }}"
+    data-variants="[{{ v1 }},{{ v2 }},{{ v3 }},{{ v4 }},{{ v5 }}]"
     {{ block.shopify_attributes }}
   >
-    <span class="methylation-hero__cta-label">{{ cta_label | escape }}</span>
-    {%- render 'methylation-cart-icon' -%}
-  </a>
+    <button
+      type="button"
+      class="methylation-hero__cta"
+      data-cta="methylation-hero"
+      on:click="/handleClick"
+    >
+      <span class="methylation-hero__cta-label">{{ cta_label | escape }}</span>
+      {%- render 'methylation-cart-icon' -%}
+    </button>
+  </bundle-cta-component>
+{%- else -%}
+  {%- if request.design_mode -%}
+    <a
+      href="{{ block.settings.link | default: '#' }}"
+      class="methylation-hero__cta methylation-hero__cta--unconfigured"
+      data-cta="methylation-hero"
+      {{ block.shopify_attributes }}
+    >
+      <span class="methylation-hero__cta-label">{{ cta_label | escape }}</span>
+      {%- render 'methylation-cart-icon' -%}
+    </a>
+    <p class="bundle-cta__warning">Bundle CTA: pick all 5 products to enable add-to-cart + 20% discount.</p>
+  {%- endif -%}
 {%- endif -%}
 
 {% schema %}
@@ -26,10 +68,24 @@
       "default": "Claim My Bundle"
     },
     {
+      "type": "text",
+      "id": "bundle_id",
+      "label": "Bundle ID",
+      "info": "Must match the bundleId in the bundle-discount function metafield.",
+      "default": "hero-bundle"
+    },
+    {
       "type": "url",
       "id": "link",
-      "label": "Button link"
-    }
+      "label": "Fallback link",
+      "info": "Used only when bundle products are not fully configured (editor preview)."
+    },
+    { "type": "header", "content": "Bundle products" },
+    { "type": "product", "id": "product_1", "label": "Product 1" },
+    { "type": "product", "id": "product_2", "label": "Product 2" },
+    { "type": "product", "id": "product_3", "label": "Product 3" },
+    { "type": "product", "id": "product_4", "label": "Product 4" },
+    { "type": "product", "id": "product_5", "label": "Product 5" }
   ]
 }
 {% endschema %}
