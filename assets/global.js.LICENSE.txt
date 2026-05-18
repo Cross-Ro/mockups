@@ -1,4 +1,8 @@
+/*! @babel/runtime/helpers/asyncToGenerator */
+
 /*! @babel/runtime/helpers/defineProperty */
+
+/*! TsComponents/bundle-cta-component */
 
 /*! TsComponents/carousel-swiper */
 
@@ -25,3 +29,7 @@
 /*!******************************************!*\
   !*** ./ts/components/migrate-section.ts ***!
   \******************************************/
+
+/*!***********************************************!*\
+  !*** ./ts/components/bundle-cta-component.ts ***!
+  \***********************************************/
