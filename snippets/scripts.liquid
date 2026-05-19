@@ -117,6 +117,39 @@
   src="{{ 'global.js' | asset_url }}"
   defer
 ></script>
+<style>
+  cart-drawer-component[data-bundle-loading="true"] .cart-drawer__content,
+  cart-drawer-component[data-bundle-loading="true"] .cart-drawer__items {
+    position: relative;
+    min-height: 8rem;
+    pointer-events: none;
+  }
+  cart-drawer-component[data-bundle-loading="true"] .cart-drawer__content::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+  cart-drawer-component[data-bundle-loading="true"] .cart-drawer__content::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: -1.25rem 0 0 -1.25rem;
+    border: 3px solid rgba(0, 0, 0, 0.15);
+    border-top-color: #d2242a;
+    border-radius: 50%;
+    animation: bundle-cta-spin 0.7s linear infinite;
+    z-index: 11;
+  }
+  @keyframes bundle-cta-spin { to { transform: rotate(360deg); } }
+</style>
 <script
   src="{{ 'popover-polyfill.js' | asset_url }}"
   type="module"
