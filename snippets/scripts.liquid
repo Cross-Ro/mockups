@@ -118,22 +118,25 @@
   defer
 ></script>
 <style>
-  cart-drawer-component[data-bundle-loading="true"] .cart-drawer__content {
+  cart-drawer-component[data-bundle-loading="true"] .cart-drawer__inner {
     position: relative;
-    min-height: 12rem;
+    min-height: 16rem;
     pointer-events: none;
   }
-  cart-drawer-component[data-bundle-loading="true"] .cart-drawer__content > *:not(.cart-drawer__header) {
+  cart-drawer-component[data-bundle-loading="true"] .cart-drawer__inner > *:not(.cart-drawer__header) {
     visibility: hidden;
   }
-  cart-drawer-component[data-bundle-loading="true"] .cart-drawer__content::after {
+  cart-drawer-component[data-bundle-loading="true"] .cart-drawer__inner::after {
     content: "";
     position: absolute;
-    inset: 0;
+    top: 60px;
+    right: 0;
+    bottom: 0;
+    left: 0;
     background: #fff;
     z-index: 10;
   }
-  cart-drawer-component[data-bundle-loading="true"] .cart-drawer__content::before {
+  cart-drawer-component[data-bundle-loading="true"] .cart-drawer__inner::before {
     content: "";
     position: absolute;
     top: 50%;
