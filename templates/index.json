@@ -179,11 +179,11 @@
                     "label": "CLAIM MY BUNDLE",
                     "bundle_id": "hero-bundle",
                     "link": "",
-                    "product_1": "the-3p-fulfilled-snowboard",
+                    "product_1": "the-inventory-not-tracked-snowboard",
                     "product_2": "the-collection-snowboard-hydrogen",
-                    "product_3": "the-collection-snowboard-liquid",
-                    "product_4": "the-collection-snowboard-oxygen",
-                    "product_5": "the-multi-location-snowboard"
+                    "product_3": "the-minimal-snowboard",
+                    "product_4": "selling-plans-ski-wax",
+                    "product_5": "the-complete-snowboard"
                   },
                   "blocks": {}
                 },
