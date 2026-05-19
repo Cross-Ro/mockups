@@ -46,7 +46,6 @@
   assign v5 = p5.selected_or_first_available_variant.id
 -%}
 
-<!-- DEBUG-METHYL: p1.id={{ p1.id }} p2.id={{ p2.id }} p3.id={{ p3.id }} p4.id={{ p4.id }} p5.id={{ p5.id }} all_picked={{ all_picked }} raw1={{ raw1 }} -->
 {%- if all_picked -%}
   <bundle-cta-component
     data-bundle-id="{{ bundle_id }}"
