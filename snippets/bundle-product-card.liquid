@@ -1,0 +1,31 @@
+{%- doc -%}
+  Renders a single product card for the bundle section.
+
+  @param {object} product - Shopify product object
+{%- enddoc -%}
+
+<li class="bundle-product-card">
+  <a href="{{ product.url }}" class="bundle-product-card__image-link" tabindex="-1" aria-hidden="true">
+    <div class="bundle-product-card__image-wrapper">
+      {%- if product.featured_media != blank -%}
+        {%- render 'image',
+          image: product.featured_media.preview_image,
+          height: 400,
+          class: 'bundle-product-card__image',
+          alt_text_fallback: product.title
+        -%}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'bundle-product-card__image bundle-product-card__image--placeholder' }}
+      {%- endif -%}
+    </div>
+  </a>
+
+  <div class="bundle-product-card__info">
+    <a href="{{ product.url }}" class="bundle-product-card__title">
+      {{- product.title -}}
+    </a>
+    <p class="bundle-product-card__price">
+      {%- render 'format-price', price: product.price -%}
+    </p>
+  </div>
+</li>
