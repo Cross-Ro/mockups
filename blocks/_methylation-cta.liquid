@@ -6,31 +6,11 @@
 {%- enddoc -%}
 
 {%- liquid
-  assign raw1 = block.settings.product_1
-  assign raw2 = block.settings.product_2
-  assign raw3 = block.settings.product_3
-  assign raw4 = block.settings.product_4
-  assign raw5 = block.settings.product_5
-  assign p1 = raw1
-  assign p2 = raw2
-  assign p3 = raw3
-  assign p4 = raw4
-  assign p5 = raw5
-  if p1.id == nil and raw1 != blank
-    assign p1 = all_products[raw1]
-  endif
-  if p2.id == nil and raw2 != blank
-    assign p2 = all_products[raw2]
-  endif
-  if p3.id == nil and raw3 != blank
-    assign p3 = all_products[raw3]
-  endif
-  if p4.id == nil and raw4 != blank
-    assign p4 = all_products[raw4]
-  endif
-  if p5.id == nil and raw5 != blank
-    assign p5 = all_products[raw5]
-  endif
+  assign p1 = block.settings.product_1
+  assign p2 = block.settings.product_2
+  assign p3 = block.settings.product_3
+  assign p4 = block.settings.product_4
+  assign p5 = block.settings.product_5
   assign cta_label = block.settings.label | default: 'Claim My Bundle'
   assign bundle_id = block.settings.bundle_id | default: 'hero-bundle'
 
